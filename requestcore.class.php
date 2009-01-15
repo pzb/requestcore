@@ -4,10 +4,10 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2008.12.15
+ * 	2009.01.15
  * 
  * Copyright:
- * 	2006-2008 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2009 LifeNexus Digital, Inc., and contributors.
  * 
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
@@ -189,7 +189,7 @@ class RequestCore
 	 * 	helpers - _array_ (Optional) An associative array of classnames to use for utilities, request, and response functionality. Gets passed in automatically by the calling class.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/__construct.phps
@@ -228,6 +228,8 @@ class RequestCore
 			$proxy['port'] = isset($proxy['port']) ? $proxy['port'] : null;
 			$this->proxy = $proxy;
 		}
+
+		return $this;
 	}
 
 
@@ -246,7 +248,7 @@ class RequestCore
 	 * 	pass - _string_ (Required) The password to authenticate with.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_credentials.phps
@@ -255,6 +257,7 @@ class RequestCore
 	{
 		$this->username = $user;
 		$this->password = $pass;
+		return $this;
 	}
 
 	/**
@@ -269,7 +272,7 @@ class RequestCore
 	 * 	value - _mixed_ (Required) The value to assign to the custom HTTP header.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/add_header.phps
@@ -277,6 +280,7 @@ class RequestCore
 	public function addHeader($key, $value)
 	{
 		$this->request_headers[$key] = $value;
+		return $this;
 	}
 
 	/**
@@ -290,7 +294,7 @@ class RequestCore
 	 * 	key - _string_ (Required) The custom HTTP header to set.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/remove_header.phps
@@ -301,6 +305,7 @@ class RequestCore
 		{
 			unset($this->request_headers[$key]);
 		}
+		return $this;
 	}
 
 	/**
@@ -314,7 +319,7 @@ class RequestCore
 	 * 	method - _string_ (Required) One of the following constants: <HTTP_GET>, <HTTP_POST>, <HTTP_PUT>, <HTTP_HEAD>, <HTTP_DELETE>.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_method.phps
@@ -322,6 +327,7 @@ class RequestCore
 	public function setMethod($method)
 	{
 		$this->method = strtoupper($method);
+		return $this;
 	}
 
 	/**
@@ -335,11 +341,12 @@ class RequestCore
 	 * 	method - _string_ (Required) The useragent string to use.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
 	 */
 	public function setUserAgent($ua)
 	{
 		$this->useragent = $ua;
+		return $this;
 	}
 
 	/**
@@ -353,7 +360,7 @@ class RequestCore
 	 * 	body - _string_ (Required) The textual content to send along in the body of the request.
 	 * 
 	 * Returns:
-	 * 	void
+	 * 	$this
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_body.phps
@@ -361,6 +368,29 @@ class RequestCore
 	public function setBody($body)
 	{
 		$this->request_body = $body;
+		return $this;
+	}
+
+	/**
+	 * Method: setRequestURL()
+	 * 	Set the URL to make the request to.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	body - _string_ (Required) The textual content to send along in the body of the request.
+	 * 
+	 * Returns:
+	 * 	$this
+ 	 * 
+	 * See Also:
+	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_request_url.phps
+	 */
+	public function setRequestURL($url)
+	{
+		$this->request_url = $url;
+		return $this;
 	}
 
 
@@ -729,7 +759,7 @@ class ResponseCore
 	 * 	status - _integer_ (Optional) HTTP response status code from the request.
 	 * 
 	 * Returns:
-	 * 	_object_ Contains an _array_ 'header' property (HTTP headers as an associative array), a _SimpleXMLElement_ 'body' property, and an _integer_ 'status' code.
+	 * 	_object_ Contains an _array_ 'header' property (HTTP headers as an associative array), a _SimpleXMLElement_ or _string_ 'body' property, and an _integer_ 'status' code.
  	 * 
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/httpresponse.phps
@@ -739,16 +769,6 @@ class ResponseCore
 		$this->header = $header;
 		$this->body = $body;
 		$this->status = $status;
-
-		if (isset($body))
-		{
-			// If the response is XML data, parse it.
-			if (substr(ltrim($body), 0, 5) == '<?xml')
-			{
-				$this->body = new SimpleXMLElement($body, LIBXML_NOCDATA);
-			}
-		}
-
 		return $this;
 	}
 
