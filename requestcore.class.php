@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2009.01.15
+ * 	2009.01.22
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -501,6 +501,7 @@ class RequestCore
 
 			default:
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this->method);
+				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 		}
 
