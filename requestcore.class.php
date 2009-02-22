@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2009.01.22
+ * 	2009.01.30
  * 
  * Copyright:
  * 	2006-2009 LifeNexus Digital, Inc., and contributors.
@@ -222,11 +222,7 @@ class RequestCore
 
 		if ($proxy)
 		{
-			$proxy = parse_url($proxy);
-			$proxy['user'] = isset($proxy['user']) ? $proxy['user'] : null;
-			$proxy['pass'] = isset($proxy['pass']) ? $proxy['pass'] : null;
-			$proxy['port'] = isset($proxy['port']) ? $proxy['port'] : null;
-			$this->proxy = $proxy;
+			$this->setProxy($proxy);
 		}
 
 		return $this;
@@ -393,6 +389,29 @@ class RequestCore
 		return $this;
 	}
 
+	/**
+	 * Method: setProxy()
+	 * 	Set the proxy to use for making requests.
+	 * 
+	 * Access:
+	 * 	public
+	 * 
+	 * Parameters:
+	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
+	 * 
+	 * Returns:
+	 * 	$this
+	 */
+	public function setProxy($proxy)
+	{
+		$proxy = parse_url($proxy);
+		$proxy['user'] = isset($proxy['user']) ? $proxy['user'] : null;
+		$proxy['pass'] = isset($proxy['pass']) ? $proxy['pass'] : null;
+		$proxy['port'] = isset($proxy['port']) ? $proxy['port'] : null;
+		$this->proxy = $proxy;
+		return $this;
+	}
+
 
 	/*%******************************************************************************************%*/
 	// PREPARE, SEND, AND PROCESS REQUEST
@@ -429,16 +448,7 @@ class RequestCore
 		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
 		curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
-
-		// Determine how to send the user agent string.
-		if (defined('TARZAN_USERAGENT'))
-		{
-			curl_setopt($curl_handle, CURLOPT_USERAGENT, TARZAN_USERAGENT);
-		}
-		else
-		{
-			curl_setopt($curl_handle, CURLOPT_USERAGENT, $this->useragent);
-		}
+		curl_setopt($curl_handle, CURLOPT_USERAGENT, $this->useragent);
 
 		// Enable a proxy connection if requested.
 		if ($this->proxy)
