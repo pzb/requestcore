@@ -149,12 +149,6 @@ class RequestCore
 	var $password = null;
 
 	/**
-	 * Property: utilities_class
-	 * The default class to use for Utilities (defaults to <TarzanUtilities>).
-	 */
-	var $utilities_class = 'TarzanUtilities';
-
-	/**
 	 * Property: request_class
 	 * The default class to use for HTTP Requests (defaults to <RequestCore>).
 	 */
@@ -186,7 +180,7 @@ class RequestCore
 	 * Parameters:
 	 * 	url - _string_ (Required) The URL to request or service endpoint to query.
 	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
-	 * 	helpers - _array_ (Optional) An associative array of classnames to use for utilities, request, and response functionality. Gets passed in automatically by the calling class.
+	 * 	helpers - _array_ (Optional) An associative array of classnames to use for request, and response functionality. Gets passed in automatically by the calling class.
 	 * 
 	 * Returns:
 	 * 	$this
@@ -203,12 +197,6 @@ class RequestCore
 		$this->request_body = '';
 
 		// Set a new Request class if one was set.
-		if (isset($helpers['utilities']) && !empty($helpers['utilities']))
-		{
-			$this->utilities_class = $helpers['utilities'];
-		}
-
-		// Set a new Request class if one was set.
 		if (isset($helpers['request']) && !empty($helpers['request']))
 		{
 			$this->request_class = $helpers['request'];
@@ -222,7 +210,7 @@ class RequestCore
 
 		if ($proxy)
 		{
-			$this->setProxy($proxy);
+			$this->set_proxy($proxy);
 		}
 
 		return $this;
@@ -233,7 +221,7 @@ class RequestCore
 	// REQUEST METHODS
 
 	/**
-	 * Method: setCredentials()
+	 * Method: set_credentials()
 	 * 	Sets the credentials to use for authentication.
 	 * 
 	 * Access:
@@ -249,7 +237,7 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_credentials.phps
 	 */
-	public function setCredentials($user, $pass)
+	public function set_credentials($user, $pass)
 	{
 		$this->username = $user;
 		$this->password = $pass;
@@ -257,7 +245,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: addHeader()
+	 * Method: add_header()
 	 * 	Adds a custom HTTP header to the cURL request.
 	 * 
 	 * Access:
@@ -273,14 +261,14 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/add_header.phps
 	 */
-	public function addHeader($key, $value)
+	public function add_header($key, $value)
 	{
 		$this->request_headers[$key] = $value;
 		return $this;
 	}
 
 	/**
-	 * Method: removeHeader()
+	 * Method: remove_header()
 	 * 	Removes an HTTP header from the cURL request.
 	 * 
 	 * Access:
@@ -295,7 +283,7 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/remove_header.phps
 	 */
-	public function removeHeader($key)
+	public function remove_header($key)
 	{
 		if (isset($this->request_headers[$key]))
 		{
@@ -305,7 +293,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: setMethod()
+	 * Method: set_method()
 	 * 	Set the method type for the request.
 	 * 
 	 * Access:
@@ -320,14 +308,14 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_method.phps
 	 */
-	public function setMethod($method)
+	public function set_method($method)
 	{
 		$this->method = strtoupper($method);
 		return $this;
 	}
 
 	/**
-	 * Method: setUserAgent()
+	 * Method: set_useragent()
 	 * 	Sets a custom useragent string for the class.
 	 * 
 	 * Access:
@@ -339,14 +327,14 @@ class RequestCore
 	 * Returns:
 	 * 	$this
 	 */
-	public function setUserAgent($ua)
+	public function set_useragent($ua)
 	{
 		$this->useragent = $ua;
 		return $this;
 	}
 
 	/**
-	 * Method: setBody()
+	 * Method: set_body()
 	 * 	Set the body to send in the request.
 	 * 
 	 * Access:
@@ -361,14 +349,14 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_body.phps
 	 */
-	public function setBody($body)
+	public function set_body($body)
 	{
 		$this->request_body = $body;
 		return $this;
 	}
 
 	/**
-	 * Method: setRequestURL()
+	 * Method: set_request_url()
 	 * 	Set the URL to make the request to.
 	 * 
 	 * Access:
@@ -383,14 +371,14 @@ class RequestCore
 	 * See Also:
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/set_request_url.phps
 	 */
-	public function setRequestURL($url)
+	public function set_request_url($url)
 	{
 		$this->request_url = $url;
 		return $this;
 	}
 
 	/**
-	 * Method: setProxy()
+	 * Method: set_proxy()
 	 * 	Set the proxy to use for making requests.
 	 * 
 	 * Access:
@@ -402,7 +390,7 @@ class RequestCore
 	 * Returns:
 	 * 	$this
 	 */
-	public function setProxy($proxy)
+	public function set_proxy($proxy)
 	{
 		$proxy = parse_url($proxy);
 		$proxy['user'] = isset($proxy['user']) ? $proxy['user'] : null;
@@ -417,7 +405,7 @@ class RequestCore
 	// PREPARE, SEND, AND PROCESS REQUEST
 
 	/**
-	 * Method: prepRequest()
+	 * Method: prep_request()
 	 * 	Prepares and adds the details of the cURL request. This can be passed along to a curl_multi_exec() function.
 	 * 
 	 * Access:
@@ -426,17 +414,17 @@ class RequestCore
 	 * Returns:
 	 * 	The handle for the cURL object.
 	 */
-	public function prepRequest()
+	public function prep_request()
 	{
-		$this->addHeader('Expect', '100-continue');
-		$this->addHeader('Connection', 'close');
+		$this->add_header('Expect', '100-continue');
+		$this->add_header('Connection', 'close');
 
 		$curl_handle = curl_init();
 
 		// Set default options.
  		curl_setopt($curl_handle, CURLOPT_URL, $this->request_url);
  		curl_setopt($curl_handle, CURLOPT_FILETIME, true);
- 		curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, true);
+ 		curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, false);
  		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
  		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, true);
  		curl_setopt($curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
@@ -518,7 +506,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: processResponse()
+	 * Method: process_response()
 	 * 	Take the post-processed cURL data and break it down into useful header/body/info chunks. Uses the data stored in the <curl_handle> and <response> properties unless replacement data is passed in via parameters.
 	 * 
 	 * Access:
@@ -531,7 +519,7 @@ class RequestCore
 	 * Returns:
 	 * 	<ResponseCore> object
 	 */
-	public function processResponse($curl_handle = null, $response = null)
+	public function process_response($curl_handle = null, $response = null)
 	{
 		// Accept a custom one if it's passed.
 		if ($curl_handle && $response)
@@ -573,7 +561,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: sendRequest()
+	 * Method: send_request()
 	 * 	Sends the request, calling necessary utility functions to update built-in properties.
 	 * 
 	 * Access:
@@ -586,14 +574,14 @@ class RequestCore
 	 * 	_string_ The resulting unparsed data from the request.
 	 * 
 	 * See Also:
-	 * 	Related - <sendMultiRequest()>
+	 * 	Related - <send_multi_request()>
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/send_request.phps
 	 */
-	public function sendRequest($parse = false)
+	public function send_request($parse = false)
 	{
-		$curl_handle = $this->prepRequest();
+		$curl_handle = $this->prep_request();
 		$this->response = curl_exec($curl_handle);
-		$parsed_response = $this->processResponse($curl_handle, $this->response);
+		$parsed_response = $this->process_response($curl_handle, $this->response);
 
 		curl_close($curl_handle);
 
@@ -606,7 +594,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: sendMultiRequest()
+	 * Method: send_multi_request()
 	 * 	Sends the request using curl_multi_exec(), enabling parallel requests.
 	 * 
 	 * Access:
@@ -619,10 +607,10 @@ class RequestCore
 	 * 	_array_ Post-processed cURL responses.
 	 * 
 	 * See Also:
-	 * 	Related - <sendRequest()>
+	 * 	Related - <send_request()>
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/send_multi_request.phps
 	 */
-	public function sendMultiRequest($handles)
+	public function send_multi_request($handles)
 	{
 		// Initialize MultiCURL
 		$multi_handle = curl_multi_init();
@@ -640,7 +628,7 @@ class RequestCore
 		{
 			$status = curl_multi_exec($multi_handle, $active);
 		}
-		while ($status == CURLM_CALL_MULTI_PERFORM  || $active);
+		while ($status == CURLM_CALL_MULTI_PERFORM || $active);
 
 		// Define this.
 		$handles_post = array();
@@ -651,7 +639,7 @@ class RequestCore
 			if (curl_errno($handle) == CURLE_OK)
 			{
 				$http = new $this->request_class(null);
-				$handles_post[] = $http->processResponse($handle, curl_multi_getcontent($handle));
+				$handles_post[] = $http->process_response($handle, curl_multi_getcontent($handle));
 			}
 			else
 			{
@@ -667,7 +655,7 @@ class RequestCore
 	// RESPONSE METHODS
 
 	/**
-	 * Method: getResponseHeader()
+	 * Method: get_response_header()
 	 * 	Get the HTTP response headers from the request.
 	 * 
 	 * Access:
@@ -680,10 +668,10 @@ class RequestCore
 	 * 	_string_|_array_ All or selected header values.
 	 * 
 	 * See Also:
-	 * 	Related - <getResponseBody()>, <getResponseCode()>
+	 * 	Related - <get_response_body()>, <get_response_code()>
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/get_response_header.phps
 	 */
-	public function getResponseHeader($header = null)
+	public function get_response_header($header = null)
 	{
 		if ($header)
 		{
@@ -693,7 +681,7 @@ class RequestCore
 	}
 
 	/**
-	 * Method: getResponseBody()
+	 * Method: get_response_body()
 	 * 	Get the HTTP response body from the request.
 	 * 
 	 * Access:
@@ -703,16 +691,16 @@ class RequestCore
 	 * 	_string_ The response body.
 	 * 
 	 * See Also:
-	 * 	Related - <getResponseHeader()>, <getResponseCode()>
+	 * 	Related - <get_response_header()>, <get_response_code()>
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/get_response_body.phps
 	 */
-	public function getResponseBody()
+	public function get_response_body()
 	{
 		return $this->response_body;
 	}
 
 	/**
-	 * Method: getResponseCode()
+	 * Method: get_response_code()
 	 * 	Get the HTTP response code from the request.
 	 * 
 	 * Access:
@@ -722,10 +710,10 @@ class RequestCore
 	 * 	_string_ The HTTP response code.
 	 * 
 	 * See Also:
-	 * 	Related - <getResponseHeader()>, <getResponseBody()>
+	 * 	Related - <get_response_header()>, <get_response_body()>
 	 * 	Example Usage - http://tarzan-aws.com/docs/examples/requestcore/get_response_code.phps
 	 */
-	public function getResponseCode()
+	public function get_response_code()
 	{
 		return $this->response_code;
 	}
