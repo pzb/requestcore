@@ -528,36 +528,43 @@ class RequestCore
 			$this->response = $response;
 		}
 
-		// Determine what's what.
-		$header_size = curl_getinfo($this->curl_handle, CURLINFO_HEADER_SIZE);
-		$this->response_headers = substr($this->response, 0, $header_size);
-		$this->response_body = substr($this->response, $header_size);
-		$this->response_code = curl_getinfo($this->curl_handle, CURLINFO_HTTP_CODE);
-		$this->response_info = curl_getinfo($this->curl_handle);
-
-		// Parse out the headers
-		$this->response_headers = explode("\r\n\r\n", trim($this->response_headers));
-		$this->response_headers = array_pop($this->response_headers);
-		$this->response_headers = explode("\r\n", $this->response_headers);
-		array_shift($this->response_headers);
-
-		// Loop through and split up the headers.
-		$header_assoc = array();
-		foreach ($this->response_headers as $header)
+		// As long as this came back as a valid resource...
+		if (is_resource($this->curl_handle))
 		{
-			$kv = explode(': ', $header);
-			$header_assoc[strtolower($kv[0])] = $kv[1];
+			// Determine what's what.
+			$header_size = curl_getinfo($this->curl_handle, CURLINFO_HEADER_SIZE);
+			$this->response_headers = substr($this->response, 0, $header_size);
+			$this->response_body = substr($this->response, $header_size);
+			$this->response_code = curl_getinfo($this->curl_handle, CURLINFO_HTTP_CODE);
+			$this->response_info = curl_getinfo($this->curl_handle);
+
+			// Parse out the headers
+			$this->response_headers = explode("\r\n\r\n", trim($this->response_headers));
+			$this->response_headers = array_pop($this->response_headers);
+			$this->response_headers = explode("\r\n", $this->response_headers);
+			array_shift($this->response_headers);
+
+			// Loop through and split up the headers.
+			$header_assoc = array();
+			foreach ($this->response_headers as $header)
+			{
+				$kv = explode(': ', $header);
+				$header_assoc[strtolower($kv[0])] = $kv[1];
+			}
+
+			// Reset the headers to the appropriate property.
+			$this->response_headers = $header_assoc;
+			$this->response_headers['_info'] = $this->response_info;
+			$this->response_headers['_info']['method'] = $this->method;
+
+			if ($curl_handle && $response)
+			{
+				return new $this->response_class($this->response_headers, $this->response_body, $this->response_code);
+			}
 		}
 
-		// Reset the headers to the appropriate property.
-		$this->response_headers = $header_assoc;
-		$this->response_headers['_info'] = $this->response_info;
-		$this->response_headers['_info']['method'] = $this->method;
-
-		if ($curl_handle && $response)
-		{
-			return new $this->response_class($this->response_headers, $this->response_body, $this->response_code);
-		}
+		// Return false
+		return false;
 	}
 
 	/**
@@ -650,9 +657,6 @@ class RequestCore
 			curl_multi_remove_handle($multi_handle, $handle);
 			curl_close($handle);
 		}
-
-		// Explicitly close the MultiCurl handle.
-		curl_multi_close($multi_handle);
 
 		return $handles_post;
 	}
