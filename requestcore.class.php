@@ -651,6 +651,9 @@ class RequestCore
 			curl_close($handle);
 		}
 
+		// Explicitly close the MultiCurl handle.
+		curl_multi_close($multi_handle);
+
 		return $handles_post;
 	}
 
