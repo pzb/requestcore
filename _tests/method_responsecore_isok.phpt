@@ -5,7 +5,7 @@ ResponseCore::isOK
 <?php
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
 	$http = new RequestCore('http://requestcore.googlecode.com/svn/trunk/_tests/test_request.txt');
-	$http->send_Request();
+	$http->send_request();
 
 	$response = new ResponseCore(
 		$http->get_response_header(),
