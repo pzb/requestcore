@@ -178,7 +178,7 @@ class RequestCore
 	 * 	public
 	 * 
 	 * Parameters:
-	 * 	url - _string_ (Required) The URL to request or service endpoint to query.
+	 * 	url - _string_ (Optional) The URL to request or service endpoint to query.
 	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
 	 * 	helpers - _array_ (Optional) An associative array of classnames to use for request, and response functionality. Gets passed in automatically by the calling class.
 	 * 
