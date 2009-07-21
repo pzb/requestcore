@@ -809,5 +809,3 @@ class ResponseCore
 		}
 	}
 }
-
-?>
