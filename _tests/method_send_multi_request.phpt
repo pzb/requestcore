@@ -6,8 +6,8 @@ RequestCore::send_multi_request
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
 	$http = new RequestCore();
 	$responses = $http->send_multi_request(array(
-		$http->set_request_url('http://requestcore.googlecode.com/svn/trunk/_tests/test_request.txt')->prep_request(),
-		$http->set_request_url('http://requestcore.googlecode.com/svn/trunk/_tests/test_request2.txt')->prep_request()
+		$http->set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt')->prep_request(),
+		$http->set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request2.txt')->prep_request()
 	));
 
 	$bodies = array(

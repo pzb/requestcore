@@ -6,8 +6,8 @@ RequestCore::send_request::array
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
 	$http = new RequestCore();
 	$http->set_request_url(array(
-		'http://requestcore.googlecode.com/svn/trunk/_tests/test_request.txt',
-		'http://requestcore.googlecode.com/svn/trunk/_tests/test_request2.txt',
+		'http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt',
+		'http://github.com/skyzyx/requestcore/raw/master/_tests/test_request2.txt',
 	));
 
 	$responses = $http->send_request();

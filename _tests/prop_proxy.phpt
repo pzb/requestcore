@@ -4,7 +4,7 @@ RequestCore::proxy
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
-	$http = new RequestCore('http://requestcore.googlecode.com/svn/trunk/_tests/test_request.txt', 'proxy://user:pass@hostname:80');
+	$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt', 'proxy://user:pass@hostname:80');
 	var_dump($http->proxy);
 ?>
 
