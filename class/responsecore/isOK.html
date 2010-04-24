@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>ResponseCore::isOK</title>
+
+		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	    <script src="../../scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body class="body_methods">
+
+		<div class="banner">
+			<span class="type">Methods</span>
+		    <h1><span class="title">ResponseCore</span>
+				</h1>
+						<p>Container for all response-related methods.</p>
+					</div>
+
+		<div id="bodyContent">
+			<div id="content">
+				<div class="method">
+	
+	<div class="title">
+		<strong>isOK</strong> ( [ $codes<span class="parameterValue"> = array( 200, 201, 204 )</span> ] )
+	</div>
+
+	<div class="description">
+					<p>Did we receive the status code we expected?</p>
+		
+					
+									<h4>Access</h4>
+																						<p>public</p>
+																				
+			
+									<h4>Parameters</h4>
+				<ul class="parameterList">
+														<li>
+												<tt>$codes</tt> - <em>integer</em> | <em>array</em> (Optional) <p>The status code(s) to expect. Pass an <em>integer</em> for a single acceptable value, or an <em>array</em> of integers for multiple acceptable values. Defaults to <em>array</em>.</p>
+					</li>
+								</ul>
+
+			
+									<h4>Returns</h4>
+																						<p><em>boolean</em> Whether we received the expected status code or not.</p>
+																				
+			
+		
+		<h4>Source</h4>
+						<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">ResponseCore</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
+		<script type="text/javascript" charset="utf-8">
+		SyntaxHighlighter.defaults['first-line'] = 780;
+		</script>
+		<div class="source hide">
+			<pre class="brush: php">public function isOK($codes = array(200, 201, 204))
+{
+    if (is_array($codes))
+    {
+        return in_array($this-&gt;status, $codes);
+    }
+    else
+    {
+        return ($this-&gt;status == $codes);
+    }
+}
+</pre>
+		</div>
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('a.showsource').click(function() {
+			// $('div.source').toggleClass('hide');
+			$('div.source').slideToggle('fast');
+			return false;
+		});
+	});
+	</script>
+</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" charset="utf-8">
+		// SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+		</script>
+	</body>
+</html>

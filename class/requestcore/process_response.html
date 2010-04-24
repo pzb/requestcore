@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>RequestCore::process_response</title>
+
+		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	    <script src="../../scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body class="body_methods">
+
+		<div class="banner">
+			<span class="type">Methods</span>
+		    <h1><span class="title">RequestCore</span>
+				</h1>
+						<p>Container for all request-related methods.</p>
+					</div>
+
+		<div id="bodyContent">
+			<div id="content">
+				<div class="method">
+	
+	<div class="title">
+		<strong>process_response</strong> ( [ $curl_handle<span class="parameterValue"> = null</span> ], [ $response<span class="parameterValue"> = null</span> ] )
+	</div>
+
+	<div class="description">
+					<p>Take the post-processed cURL data and break it down into useful header/body/info chunks. Uses the data stored in the &lt;curl_handle&gt; and &lt;response&gt; properties unless replacement data is passed in via parameters.</p>
+		
+					
+									<h4>Access</h4>
+																						<p>public</p>
+																				
+			
+									<h4>Parameters</h4>
+				<ul class="parameterList">
+														<li>
+												<tt>$curl_handle</tt> - <em>string</em> (Optional) <p>The reference to the already executed cURL request.</p>
+					</li>
+														<li>
+												<tt>$response</tt> - <em>string</em> (Optional) <p>The actual response content itself that needs to be parsed.</p>
+					</li>
+								</ul>
+
+			
+									<h4>Returns</h4>
+																						<p>&lt;ResponseCore&gt; object</p>
+																				
+			
+		
+		<h4>Source</h4>
+						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (47 lines)</p>
+		<script type="text/javascript" charset="utf-8">
+		SyntaxHighlighter.defaults['first-line'] = 528;
+		</script>
+		<div class="source hide">
+			<pre class="brush: php">public function process_response($curl_handle = null, $response = null)
+{
+    // Accept a custom one if it's passed.
+    if ($curl_handle &amp;&amp; $response)
+    {
+        $this-&gt;curl_handle = $curl_handle;
+        $this-&gt;response = $response;
+    }
+
+    // As long as this came back as a valid resource...
+    if (is_resource($this-&gt;curl_handle))
+    {
+        // Determine what's what.
+        $header_size = curl_getinfo($this-&gt;curl_handle, CURLINFO_HEADER_SIZE);
+        $this-&gt;response_headers = substr($this-&gt;response, 0, $header_size);
+        $this-&gt;response_body = substr($this-&gt;response, $header_size);
+        $this-&gt;response_code = curl_getinfo($this-&gt;curl_handle, CURLINFO_HTTP_CODE);
+        $this-&gt;response_info = curl_getinfo($this-&gt;curl_handle);
+
+        // Parse out the headers
+        $this-&gt;response_headers = explode(&quot;\r\n\r\n&quot;, trim($this-&gt;response_headers));
+        $this-&gt;response_headers = array_pop($this-&gt;response_headers);
+        $this-&gt;response_headers = explode(&quot;\r\n&quot;, $this-&gt;response_headers);
+        array_shift($this-&gt;response_headers);
+
+        // Loop through and split up the headers.
+        $header_assoc = array();
+        foreach ($this-&gt;response_headers as $header)
+        {
+            $kv = explode(': ', $header);
+            $header_assoc[strtolower($kv[0])] = $kv[1];
+        }
+
+        // Reset the headers to the appropriate property.
+        $this-&gt;response_headers = $header_assoc;
+        $this-&gt;response_headers['_info'] = $this-&gt;response_info;
+        $this-&gt;response_headers['_info']['method'] = $this-&gt;method;
+
+        if ($curl_handle &amp;&amp; $response)
+        {
+            return new $this-&gt;response_class($this-&gt;response_headers, $this-&gt;response_body, $this-&gt;response_code);
+        }
+    }
+
+    // Return false
+    return false;
+}
+</pre>
+		</div>
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('a.showsource').click(function() {
+			// $('div.source').toggleClass('hide');
+			$('div.source').slideToggle('fast');
+			return false;
+		});
+	});
+	</script>
+</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" charset="utf-8">
+		// SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+		</script>
+	</body>
+</html>

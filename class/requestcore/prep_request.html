@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>RequestCore::prep_request</title>
+
+		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	    <script src="../../scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/main.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body class="body_methods">
+
+		<div class="banner">
+			<span class="type">Methods</span>
+		    <h1><span class="title">RequestCore</span>
+				</h1>
+						<p>Container for all request-related methods.</p>
+					</div>
+
+		<div id="bodyContent">
+			<div id="content">
+				<div class="method">
+	
+	<div class="title">
+		<strong>prep_request</strong> ()
+	</div>
+
+	<div class="description">
+					<p>Prepares and adds the details of the cURL request. This can be passed along to a <code>curl_multi_exec()</code> function.</p>
+		
+					
+									<h4>Access</h4>
+																						<p>public</p>
+																				
+			
+									<h4>Returns</h4>
+																						<p>The handle for the cURL object.</p>
+																				
+			
+		
+		<h4>Source</h4>
+						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (99 lines)</p>
+		<script type="text/javascript" charset="utf-8">
+		SyntaxHighlighter.defaults['first-line'] = 414;
+		</script>
+		<div class="source hide">
+			<pre class="brush: php">public function prep_request()
+{
+    $this-&gt;add_header('Expect', '100-continue');
+    $this-&gt;add_header('Connection', 'close');
+
+    $curl_handle = curl_init();
+
+    // Set default options.
+    curl_setopt($curl_handle, CURLOPT_URL, $this-&gt;request_url);
+    curl_setopt($curl_handle, CURLOPT_FILETIME, true);
+    curl_setopt($curl_handle, CURLOPT_FRESH_CONNECT, false);
+    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, true);
+    curl_setopt($curl_handle, CURLOPT_CLOSEPOLICY, CURLCLOSEPOLICY_LEAST_RECENTLY_USED);
+    curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($curl_handle, CURLOPT_MAXREDIRS, 5);
+    curl_setopt($curl_handle, CURLOPT_HEADER, true);
+    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl_handle, CURLOPT_TIMEOUT, 5184000);
+    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 120);
+    curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
+    curl_setopt($curl_handle, CURLOPT_REFERER, $this-&gt;request_url);
+    curl_setopt($curl_handle, CURLOPT_USERAGENT, $this-&gt;useragent);
+
+    // Merge in the CURLOPTs
+    if (isset($this-&gt;curlopts) &amp;&amp; sizeof($this-&gt;curlopts) &gt; 0)
+    {
+        foreach ($this-&gt;curlopts as $k =&gt; $v)
+        {
+            curl_setopt($curl_handle, $k, $v);
+        }
+    }
+
+    // Enable a proxy connection if requested.
+    if ($this-&gt;proxy)
+    {
+        curl_setopt($curl_handle, CURLOPT_HTTPPROXYTUNNEL, true);
+
+        $host = $this-&gt;proxy['host'];
+        $host .= ($this-&gt;proxy['port']) ? ':' . $this-&gt;proxy['port'] : '';
+        curl_setopt($curl_handle, CURLOPT_PROXY, $host);
+
+        if (isset($this-&gt;proxy['user']) &amp;&amp; isset($this-&gt;proxy['pass']))
+        {
+            curl_setopt($curl_handle, CURLOPT_PROXYUSERPWD, $this-&gt;proxy['user'] . ':' . $this-&gt;proxy['pass']);
+        }
+    }
+
+    // Set credentials for HTTP Basic/Digest Authentication.
+    if ($this-&gt;username &amp;&amp; $this-&gt;password)
+    {
+        curl_setopt($curl_handle, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        curl_setopt($curl_handle, CURLOPT_USERPWD, $this-&gt;username . ':' . $this-&gt;password);
+    }
+
+    // Handle the encoding if we can.
+    if (extension_loaded('zlib'))
+    {
+        curl_setopt($curl_handle, CURLOPT_ENCODING, '');
+    }
+
+    // Process custom headers
+    if (isset($this-&gt;request_headers) &amp;&amp; count($this-&gt;request_headers))
+    {
+        $temp_headers = array();
+
+        foreach ($this-&gt;request_headers as $k =&gt; $v)
+        {
+            $temp_headers[] = $k . ': ' . $v;
+        }
+
+        curl_setopt($curl_handle, CURLOPT_HTTPHEADER, $temp_headers);
+    }
+
+    switch ($this-&gt;method)
+    {
+        case $this::HTTP_PUT:
+            curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
+            break;
+
+        case $this::HTTP_POST:
+            curl_setopt($curl_handle, CURLOPT_POST, true);
+            curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
+            break;
+
+        case $this::HTTP_HEAD:
+            curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this::HTTP_HEAD);
+            curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
+            break;
+
+        default:
+            curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this-&gt;method);
+            curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this-&gt;request_body);
+            break;
+    }
+
+    return $curl_handle;
+}
+</pre>
+		</div>
+	</div>
+
+	<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('a.showsource').click(function() {
+			// $('div.source').toggleClass('hide');
+			$('div.source').slideToggle('fast');
+			return false;
+		});
+	});
+	</script>
+</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" charset="utf-8">
+		// SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+		</script>
+	</body>
+</html>
