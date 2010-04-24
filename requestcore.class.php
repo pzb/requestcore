@@ -177,12 +177,12 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	url - _string_ (Optional) The URL to request or service endpoint to query.
-	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
-	 * 	helpers - _array_ (Optional) An associative array of classnames to use for request, and response functionality. Gets passed in automatically by the calling class.
+	 * 	$url - _string_ (Optional) The URL to request or service endpoint to query.
+	 * 	$proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: `proxy://user:pass@hostname:port`
+	 * 	$helpers - _array_ (Optional) An associative array of classnames to use for request, and response functionality. Gets passed in automatically by the calling class.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function __construct($url = null, $proxy = null, $helpers = null)
 	{
@@ -224,11 +224,11 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	user - _string_ (Required) The username to authenticate with.
-	 * 	pass - _string_ (Required) The password to authenticate with.
+	 * 	$user - _string_ (Required) The username to authenticate with.
+	 * 	$pass - _string_ (Required) The password to authenticate with.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_credentials($user, $pass)
 	{
@@ -245,11 +245,11 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	key - _string_ (Required) The custom HTTP header to set.
-	 * 	value - _mixed_ (Required) The value to assign to the custom HTTP header.
+	 * 	$key - _string_ (Required) The custom HTTP header to set.
+	 * 	$value - _mixed_ (Required) The value to assign to the custom HTTP header.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function add_header($key, $value)
 	{
@@ -265,10 +265,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	key - _string_ (Required) The custom HTTP header to set.
+	 * 	$key - _string_ (Required) The custom HTTP header to set.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function remove_header($key)
 	{
@@ -287,10 +287,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	method - _string_ (Required) One of the following constants: <HTTP_GET>, <HTTP_POST>, <HTTP_PUT>, <HTTP_HEAD>, <HTTP_DELETE>.
+	 * 	$method - _string_ (Required) One of the following constants: <HTTP_GET>, <HTTP_POST>, <HTTP_PUT>, <HTTP_HEAD>, <HTTP_DELETE>.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_method($method)
 	{
@@ -306,10 +306,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	method - _string_ (Required) The useragent string to use.
+	 * 	$ua - _string_ (Required) The useragent string to use.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_useragent($ua)
 	{
@@ -325,10 +325,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	body - _string_ (Required) The textual content to send along in the body of the request.
+	 * 	$body - _string_ (Required) The textual content to send along in the body of the request.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_body($body)
 	{
@@ -344,10 +344,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	body - _string_ (Required) The textual content to send along in the body of the request.
+	 * 	$url - _string_ (Required) The URL to make the request to.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_request_url($url)
 	{
@@ -363,10 +363,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	curlopts - _array_ (Optional) A set of key-value pairs that set CURLOPT options. These will merge with the existing CURLOPTs, and ones passed here will override the defaults. Keys should be the CURLOPT_* constants, not strings.
+	 * 	$curlopts - _array_ (Optional) A set of key-value pairs that set `CURLOPT` options. These will merge with the existing CURLOPTs, and ones passed here will override the defaults. Keys should be the `CURLOPT_*` constants, not strings.
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_curlopts($curlopts)
 	{
@@ -382,10 +382,10 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: proxy://user:pass@hostname:port
+	 * 	$proxy - _string_ (Optional) The faux-url to use for proxy settings. Takes the following format: `proxy://user:pass@hostname:port`
 	 *
 	 * Returns:
-	 * 	$this
+	 * 	`$this`
 	 */
 	public function set_proxy($proxy)
 	{
@@ -403,7 +403,7 @@ class RequestCore
 
 	/**
 	 * Method: prep_request()
-	 * 	Prepares and adds the details of the cURL request. This can be passed along to a curl_multi_exec() function.
+	 * 	Prepares and adds the details of the cURL request. This can be passed along to a `curl_multi_exec()` function.
 	 *
 	 * Access:
 	 * 	public
@@ -519,8 +519,8 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	curl_handle - _string_ (Optional) The reference to the already executed cURL request.
-	 * 	response - _string_ (Optional) The actual response content itself that needs to be parsed.
+	 * 	$curl_handle - _string_ (Optional) The reference to the already executed cURL request.
+	 * 	$response - _string_ (Optional) The actual response content itself that needs to be parsed.
 	 *
 	 * Returns:
 	 * 	<ResponseCore> object
@@ -581,7 +581,7 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	parse - _boolean_ (Optional) Whether to parse the response with ResponseCore or not.
+	 * 	$parse - _boolean_ (Optional) Whether to parse the response with ResponseCore or not.
 	 *
 	 * Returns:
 	 * 	_string_ The resulting unparsed data from the request.
@@ -610,7 +610,7 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	handles - _array_ (Required) An indexed array of cURL handles to process simultaneously.
+	 * 	$handles - _array_ (Required) An indexed array of cURL handles to process simultaneously.
 	 *
 	 * Returns:
 	 * 	_array_ Post-processed cURL responses.
@@ -671,7 +671,7 @@ class RequestCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	header - _string_ (Optional) A specific header value to return. Defaults to all headers.
+	 * 	$header - _string_ (Optional) A specific header value to return. Defaults to all headers.
 	 *
 	 * Returns:
 	 * 	_string_|_array_ All or selected header values.
@@ -749,12 +749,12 @@ class ResponseCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	header - _array_ (Required) Associative array of HTTP headers (typically returned by <RequestCore::getResponseHeader()>).
-	 * 	body - _string_ (Required) XML-formatted response from AWS.
-	 * 	status - _integer_ (Optional) HTTP response status code from the request.
+	 * 	$header - _array_ (Required) Associative array of HTTP headers (typically returned by <RequestCore::getResponseHeader()>).
+	 * 	$body - _string_ (Required) XML-formatted response from AWS.
+	 * 	$status - _integer_ (Optional) HTTP response status code from the request.
 	 *
 	 * Returns:
-	 * 	_object_ Contains an _array_ 'header' property (HTTP headers as an associative array), a _SimpleXMLElement_ or _string_ 'body' property, and an _integer_ 'status' code.
+	 * 	_object_ Contains an _array_ `header` property (HTTP headers as an associative array), a _SimpleXMLElement_ or _string_ `body` property, and an _integer_ `status` code.
 	 */
 	public function __construct($header, $body, $status = null)
 	{
@@ -772,7 +772,7 @@ class ResponseCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	codes - _integer|array_ (Optional) The status code(s) to expect. Pass an _integer_ for a single acceptable value, or an _array_ of integers for multiple acceptable values. Defaults to _array_ 200|204.
+	 * 	$codes - _integer|array_ (Optional) The status code(s) to expect. Pass an _integer_ for a single acceptable value, or an _array_ of integers for multiple acceptable values. Defaults to _array_.
 	 *
 	 * Returns:
 	 * 	_boolean_ Whether we received the expected status code or not.
