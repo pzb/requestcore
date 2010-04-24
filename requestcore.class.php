@@ -4,10 +4,10 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2009.12.17
+ * 	2010.03.21
  *
  * Copyright:
- * 	2006-2009 LifeNexus Digital, Inc., and contributors.
+ * 	2006-2010 Ryan Parman, Foleeo Inc., and contributors.
  *
  * License:
  * 	Simplified BSD License - http://opensource.org/licenses/bsd-license.php
@@ -22,40 +22,6 @@
  * 	Default RequestCore Exception.
  */
 class RequestCore_Exception extends Exception {}
-
-
-/*%******************************************************************************************%*/
-// CONSTANTS
-
-/**
- * Constant: HTTP_GET
- * HTTP method type: Get
- */
-if (!defined('HTTP_GET')) define('HTTP_GET', 'GET');
-
-/**
- * Constant: HTTP_POST
- * HTTP method type: Post
- */
-if (!defined('HTTP_POST')) define('HTTP_POST', 'POST');
-
-/**
- * Constant: HTTP_PUT
- * HTTP method type: Put
- */
-if (!defined('HTTP_PUT')) define('HTTP_PUT', 'PUT');
-
-/**
- * Constant: HTTP_DELETE
- * HTTP method type: Delete
- */
-if (!defined('HTTP_DELETE')) define('HTTP_DELETE', 'DELETE');
-
-/**
- * Constant: HTTP_HEAD
- * HTTP method type: Head
- */
-if (!defined('HTTP_HEAD')) define('HTTP_HEAD', 'HEAD');
 
 
 /*%******************************************************************************************%*/
@@ -169,6 +135,36 @@ class RequestCore
 	 */
 	var $useragent = 'RequestCore/1.1';
 
+	/**
+	 * Constant: HTTP_GET
+	 * 	GET HTTP Method
+	 */
+	const HTTP_GET = 'GET';
+
+	/**
+	 * Constant: HTTP_POST
+	 * 	POST HTTP Method
+	 */
+	const HTTP_POST = 'POST';
+
+	/**
+	 * Constant: HTTP_PUT
+	 * 	PUT HTTP Method
+	 */
+	const HTTP_PUT = 'PUT';
+
+	/**
+	 * Constant: HTTP_DELETE
+	 * 	DELETE HTTP Method
+	 */
+	const HTTP_DELETE = 'DELETE';
+
+	/**
+	 * Constant: HTTP_HEAD
+	 * 	HEAD HTTP Method
+	 */
+	const HTTP_HEAD = 'HEAD';
+
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -192,7 +188,7 @@ class RequestCore
 	{
 		// Set some default values.
 		$this->request_url = $url;
-		$this->method = HTTP_GET;
+		$this->method = $this::HTTP_GET;
 		$this->request_headers = array();
 		$this->request_body = '';
 
@@ -491,18 +487,18 @@ class RequestCore
 
 		switch ($this->method)
 		{
-			case HTTP_PUT:
+			case $this::HTTP_PUT:
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
-			case HTTP_POST:
+			case $this::HTTP_POST:
 				curl_setopt($curl_handle, CURLOPT_POST, true);
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
-			case HTTP_HEAD:
-				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, HTTP_HEAD);
+			case $this::HTTP_HEAD:
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this::HTTP_HEAD);
 				curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
 				break;
 

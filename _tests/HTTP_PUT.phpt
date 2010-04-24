@@ -4,7 +4,7 @@ RequestCore::HTTP_PUT
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
-	echo HTTP_PUT;
+	echo RequestCore::HTTP_PUT;
 ?>
 
 --EXPECT--
