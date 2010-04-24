@@ -8,7 +8,7 @@ RequestCore was written as a replacement for [PEAR HTTP_Request](http://pear.php
 
 ### Reference and Download
 
-You can find the class reference at <http://skyzyx.github.com/requestcore/>. You can get the code from <http://github.com/skyzyx/requestcore>
+You can find the class reference at <http://skyzyx.github.com/requestcore/>. You can get the code from <http://github.com/skyzyx/requestcore>.
 
 ### License and Copyright
 
