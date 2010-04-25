@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::HTTP_DELETE
+HTTP_DELETE
 
 --FILE--
 <?php

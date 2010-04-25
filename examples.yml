@@ -1,0 +1,50 @@
+RequestCore:
+    __construct:
+    add_header:
+          - _tests/method_add_header.phpt
+    remove_header:
+        - _tests/method_remove_header.phpt
+    get_response_header:
+        - _tests/method_get_response_header_content_type.phpt
+        - _tests/method_get_response_header_info_url.phpt
+    get_response_body:
+        - _tests/method_get_response_body.phpt
+    get_response_code:
+        - _tests/method_get_response_code.phpt
+    set_body:
+    set_credentials:
+        - _tests/method_set_credentials_user.phpt
+        - _tests/method_set_credentials_pass.phpt
+    set_curlopts:
+    set_method:
+    set_proxy:
+        - _tests/method_set_proxy.phpt
+    set_request_url:
+        - _tests/method_set_request_url.phpt
+    set_useragent:
+        - _tests/method_set_useragent.phpt
+    send_request:
+        - _tests/method_send_request.phpt
+        - _tests/method_send_request2.phpt
+        - _tests/method_send_request2_failed.phpt
+        - _tests/method_send_request_array.txt
+        - _tests/method_send_request_failed.phpt
+        - _tests/method_send_request_head.phpt
+        - _tests/method_send_request_put.phpt
+        - _tests/method_send_request_isok.phpt
+        - _tests/method_send_request_isok_200.phpt
+    send_multi_request:
+        - _tests/method_send_multi_request.phpt
+        - _tests/method_send_multi_request_failed.phpt
+        - _tests/method_send_multi_request_failed2.txt
+    prep_request:
+    process_response:
+        - _tests/method_process_response.phpt
+
+ResponseCore:
+    __construct:
+    isOK:
+        - _tests/method_responsecore_isok.phpt
+        - _tests/method_responsecore_isok_false.phpt
+        - _tests/method_send_request_isok.phpt
+        - _tests/method_send_request_isok_200.phpt

@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::set_user_credentials
+set_user_credentials
 
 --FILE--
 <?php

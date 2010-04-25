@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::response_headers::url
+response_headers::url
 
 --FILE--
 <?php

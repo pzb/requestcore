@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::set_request_url
+set_request_url
 
 --FILE--
 <?php

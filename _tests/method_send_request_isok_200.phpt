@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::send_request_head isOK()
+send_request_head isOK()
 
 --FILE--
 <?php

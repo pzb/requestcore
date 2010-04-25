@@ -1,6 +1,0 @@
-
----- EXPECTED OUTPUT
-string(2) "48"
----- ACTUAL OUTPUT
-string(3) "221"
----- FAILED

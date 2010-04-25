@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::RequestCore_Exception - Exists
+RequestCore_Exception - Exists
 
 --FILE--
 <?php

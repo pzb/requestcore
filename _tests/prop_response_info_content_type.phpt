@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::response_headers::content_type
+response_headers::content_type
 
 --FILE--
 <?php

@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::request_headers
+add_header
 
 --FILE--
 <?php

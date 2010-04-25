@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::setProxy
+setProxy
 
 --FILE--
 <?php

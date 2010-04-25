@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::send_request2_failed
+send_request2_failed
 
 --FILE--
 <?php

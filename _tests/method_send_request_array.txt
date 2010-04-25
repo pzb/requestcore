@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::send_request::array
+send_request::array
 
 --FILE--
 <?php

@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::method
+method
 
 --FILE--
 <?php

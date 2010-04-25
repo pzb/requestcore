@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::process_response() - No valid cURL handle, nor a response being passed in
+process_response() - No valid cURL handle, nor a response being passed in
 
 --FILE--
 <?php

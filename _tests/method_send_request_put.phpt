@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::send_request_head
+send_request_head
 
 --FILE--
 <?php

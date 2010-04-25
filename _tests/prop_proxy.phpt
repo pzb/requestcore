@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::proxy
+proxy
 
 --FILE--
 <?php

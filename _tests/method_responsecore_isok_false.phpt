@@ -1,5 +1,5 @@
 --TEST--
-ResponseCore::isOK
+isOK
 
 --FILE--
 <?php

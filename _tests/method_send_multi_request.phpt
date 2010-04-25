@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::send_multi_request
+send_multi_request
 
 --FILE--
 <?php

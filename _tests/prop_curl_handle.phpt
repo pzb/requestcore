@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::curl_handle
+curl_handle
 
 --FILE--
 <?php

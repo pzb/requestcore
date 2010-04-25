@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::HTTP_POST
+HTTP_POST
 
 --FILE--
 <?php

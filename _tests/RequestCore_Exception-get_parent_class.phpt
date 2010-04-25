@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::RequestCore_Exception - Get parent class
+RequestCore_Exception - Get parent class
 
 --FILE--
 <?php

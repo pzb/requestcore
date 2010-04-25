@@ -1,5 +1,5 @@
 --TEST--
-ResponseCore::body
+body
 
 --FILE--
 <?php

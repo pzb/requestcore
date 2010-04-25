@@ -1,5 +1,5 @@
 --TEST--
-ResponseCore::header::content-type
+header::content-type
 
 --FILE--
 <?php

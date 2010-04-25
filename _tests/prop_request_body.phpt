@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::request_body
+request_body
 
 --FILE--
 <?php

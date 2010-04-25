@@ -1,5 +1,5 @@
 --TEST--
-RequestCore::set_request_class
+set_request_class
 
 --FILE--
 <?php
