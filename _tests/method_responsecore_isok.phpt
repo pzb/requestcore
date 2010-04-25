@@ -1,5 +1,5 @@
 --TEST--
-isOK
+Successful response code should make isOK() return true.
 
 --FILE--
 <?php

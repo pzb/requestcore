@@ -1,10 +1,11 @@
 --TEST--
-send_multi_request
+Collect cURL handles for two requests, fire them, then display the response bodies.
 
 --FILE--
 <?php
 	require_once dirname(__FILE__) . '/../requestcore.class.php';
 	$http = new RequestCore();
+
 	$responses = $http->send_multi_request(array(
 		$http->set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt')->prep_request(),
 		$http->set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request2.txt')->prep_request()

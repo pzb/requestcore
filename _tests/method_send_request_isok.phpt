@@ -1,5 +1,5 @@
 --TEST--
-send_request_head isOK()
+Standard request with a standard (successful) response code.
 
 --FILE--
 <?php
@@ -7,6 +7,7 @@ send_request_head isOK()
 	$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 	$http->set_method($http::HTTP_PUT);
 	$response = $http->send_request(true);
+
 	var_dump($response->isOK());
 ?>
 

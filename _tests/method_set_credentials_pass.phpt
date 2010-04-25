@@ -1,5 +1,5 @@
 --TEST--
-set_user_credentials
+Pass credentials to set_credentials(), and display the password to use.
 
 --FILE--
 <?php

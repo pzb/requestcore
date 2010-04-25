@@ -1,5 +1,5 @@
 --TEST--
-add_header
+Add a custom header to the request (without firing it).
 
 --FILE--
 <?php
@@ -7,6 +7,7 @@ add_header
 	$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 	$http->prep_request();
 	$http->add_header('x-requestcore-header', 'value');
+
 	var_dump($http->request_headers);
 ?>
 

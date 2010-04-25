@@ -1,5 +1,5 @@
 --TEST--
-setProxy
+Pass in a proxy DSN string, and process it with prep_request() (without firing the request).
 
 --FILE--
 <?php
@@ -7,6 +7,7 @@ setProxy
 	$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 	$http->set_proxy('proxy://user:pass@hostname:80');
 	$http->prep_request();
+
 	var_dump($http->proxy);
 ?>
 

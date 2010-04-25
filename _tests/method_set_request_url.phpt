@@ -1,5 +1,5 @@
 --TEST--
-set_request_url
+Send a request and display the URL we requested.
 
 --FILE--
 <?php
@@ -7,6 +7,7 @@ set_request_url
 	$http = new RequestCore();
 	$http->set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 	$http->send_request();
+
 	var_dump($http->response_info['url']);
 ?>
 

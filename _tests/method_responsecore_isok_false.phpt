@@ -1,5 +1,5 @@
 --TEST--
-isOK
+Invalid response code (e.g. 999) should make isOK() fail.
 
 --FILE--
 <?php
