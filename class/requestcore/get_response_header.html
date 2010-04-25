@@ -56,10 +56,28 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_get_response_header_content_type.phpt">Display the Content-Type header of the response.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;send_request();
+
+var_dump($http-&gt;get_response_header('content-type'));</pre>
+					<br><pre>string(25) "text/plain; charset=utf-8"</pre>
+														<h5 title="_tests/method_get_response_header_info_url.phpt">Display the URL that was requested.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;send_request();
+$info = $http-&gt;get_response_header('_info');
+
+var_dump($info['url']);</pre>
+					<br><pre>string(71) "http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt"</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (8 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 679;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function get_response_header($header = null)
@@ -83,6 +101,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>

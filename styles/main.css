@@ -11,7 +11,7 @@ body {
 a {
 	color: #326EA1;
 	text-decoration: underline;
-	padding: 1px 2px;
+	padding: 1px 2px !important;
 
 	-webkit-transition: background-color 0.15s;
 	-webkit-border-radius: 2px;
@@ -55,6 +55,15 @@ h3 {
 h4 {
 	margin: 1.4em 0 0.5em 0;
 	font-size: 1em;
+}
+
+h5 {
+	margin: 2.0em 0 0.5em 0;
+	font-size: 0.95em;
+}
+
+#disqus_thread h3 {
+	margin: 1.4em 0 0.5em 0;
 }
 
 .clear {
@@ -147,6 +156,7 @@ code, tt {
 
 pre {
 	margin-bottom: 1em;
+	font-family: "Consolas", "Bitstream Vera Sans Mono", monospace !important;
 }
 
 .methods dt {
@@ -323,6 +333,22 @@ tt {
 	display: inline;
 	padding: 0;
 }
+
 .hide {
 	display: none;
+}
+
+#commentWrapper { width: 50%; }
+
+#dsq-content a { background-color: transparent !important; }
+#dsq-content a:hover { background-color: #333 !important; }
+
+#dsq-content li.dsq-login-button,
+#dsq-content div.dsq-request-user-info a {
+	display: inline-block;
+}
+
+#dsq-content li.dsq-login-button a,
+#dsq-content li.dsq-login-button a img {
+	display: block;
 }

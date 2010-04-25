@@ -56,10 +56,33 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_set_proxy.phpt">Pass in a proxy DSN string, and process it with prep_request() (without firing the request).</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;set_proxy('proxy://user:pass@hostname:80');
+$http-&gt;prep_request();
+
+var_dump($http-&gt;proxy);</pre>
+					<br><pre>array(5) {
+  ["scheme"]=&gt;
+  string(5) "proxy"
+  ["host"]=&gt;
+  string(8) "hostname"
+  ["port"]=&gt;
+  int(80)
+  ["user"]=&gt;
+  string(4) "user"
+  ["pass"]=&gt;
+  string(4) "pass"
+}</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (9 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 390;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function set_proxy($proxy)
@@ -84,6 +107,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>

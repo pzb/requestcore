@@ -59,10 +59,29 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_add_header.phpt">Add a custom header to the request (without firing it).</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;prep_request();
+$http-&gt;add_header('x-requestcore-header', 'value');
+
+var_dump($http-&gt;request_headers);</pre>
+					<br><pre>array(3) {
+  ["Expect"]=&gt;
+  string(12) "100-continue"
+  ["Connection"]=&gt;
+  string(5) "close"
+  ["x-requestcore-header"]=&gt;
+  string(5) "value"
+}</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (5 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 254;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function add_header($key, $value)
@@ -83,6 +102,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>

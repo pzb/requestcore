@@ -56,10 +56,53 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_responsecore_isok.phpt">Successful response code should make isOK() return true.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;send_request();
+
+$response = new ResponseCore(
+	$http-&gt;get_response_header(),
+	$http-&gt;get_response_body(),
+	$http-&gt;get_response_code()
+);
+
+var_dump($response-&gt;isOK());</pre>
+					<br><pre>bool(true)</pre>
+														<h5 title="_tests/method_responsecore_isok_false.phpt">Invalid response code (e.g. 999) should make isOK() fail.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;send_request();
+
+$response = new ResponseCore(
+	$http-&gt;get_response_header(),
+	$http-&gt;get_response_body(),
+	999
+);
+
+var_dump($response-&gt;isOK());</pre>
+					<br><pre>bool(false)</pre>
+														<h5 title="_tests/method_send_request_isok.phpt">Standard request with a standard (successful) response code.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;set_method($http::HTTP_PUT);
+$response = $http-&gt;send_request(true);
+
+var_dump($response-&gt;isOK());</pre>
+					<br><pre>bool(true)</pre>
+														<h5 title="_tests/method_send_request_isok_200.phpt">Test response code 200 explicitly, excluding other valid response codes.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;set_method($http::HTTP_PUT);
+$response = $http-&gt;send_request(true);
+
+var_dump($response-&gt;isOK(200));</pre>
+					<br><pre>bool(true)</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">ResponseCore</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 780;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function isOK($codes = array(200, 201, 204))
@@ -86,6 +129,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>

@@ -56,10 +56,42 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_send_request.phpt">Send the request, parse it with ResponseCore, and display only the body.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$response = $http-&gt;send_request(true);
+
+var_dump($response-&gt;body);</pre>
+					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
+0123456789
+!@#$%^&amp;*()"</pre>
+														<h5 title="_tests/method_send_request2.phpt">Set the URL via set_request_url() instead of the constructor, send the request, parse it with ResponseCore, and display only the body.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore();
+
+$http-&gt;set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$response = $http-&gt;send_request(true);
+
+var_dump($response-&gt;body);</pre>
+					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
+0123456789
+!@#$%^&amp;*()"</pre>
+														<h5 title="_tests/method_send_request_head.phpt">Send a HEAD request instead of a GET request, and display the response's Content-Type and non-body (since this is a HEAD request).</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+$http-&gt;set_method($http::HTTP_HEAD);
+$response = $http-&gt;send_request(true);
+
+var_dump($response-&gt;header['content-type']);
+var_dump($response-&gt;body);</pre>
+					<br><pre>string(25) "text/plain; charset=utf-8"
+bool(false)</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (15 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 589;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function send_request($parse = false)
@@ -90,6 +122,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>

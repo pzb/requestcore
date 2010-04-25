@@ -56,10 +56,39 @@
 																				
 			
 		
+					<h4>Examples</h4>
+			<div class="description">
+														<h5 title="_tests/method_send_multi_request.phpt">Collect cURL handles for two requests, fire them, then display the response bodies.</h5>
+					<pre class="brush: php; first-line: 1">$http = new RequestCore();
+
+$responses = $http-&gt;send_multi_request(array(
+	$http-&gt;set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt')-&gt;prep_request(),
+	$http-&gt;set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request2.txt')-&gt;prep_request()
+));
+
+$bodies = array(
+	$responses[0]-&gt;body,
+	$responses[1]-&gt;body,
+);
+
+var_dump($bodies);</pre>
+					<br><pre>array(2) {
+  [0]=&gt;
+  string(48) "abcdefghijklmnopqrstuvwxyz
+0123456789
+!@#$%^&amp;*()"
+  [1]=&gt;
+  string(48) ")(*&amp;^%$#@!
+9876543210
+zyxwvutsrqponmljkihgfedcba"
+}</pre>
+							</div>
+		
 		<h4>Source</h4>
 						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (43 lines)</p>
 		<script type="text/javascript" charset="utf-8">
 		SyntaxHighlighter.defaults['first-line'] = 618;
+		SyntaxHighlighter.defaults['auto-links'] = false;
 		</script>
 		<div class="source hide">
 			<pre class="brush: php">public function send_multi_request($handles)
@@ -118,6 +147,22 @@
 		});
 	});
 	</script>
+
+	<!-- Disqus Comments -->
+	<!--
+	<div id="commentWrapper">
+		<br><br>
+		<div class="title">
+			<strong>User contributed notes</strong>
+		</div>
+		<div class="description">
+			<div id="disqus_thread"></div>
+			<script type="text/javascript">var disqus_developer = 1;</script>
+			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
+			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+		</div>
+	</div>
+	-->
 </div>
 			</div>
 		</div>
