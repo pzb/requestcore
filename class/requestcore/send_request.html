@@ -6,16 +6,15 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>RequestCore::send_request</title>
 
-		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/syntax.css" type="text/css" media="screen" charset="utf-8">
 
-	    <script src="../../scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="../../scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="../../scripts/main.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/chili/jquery.chili-2.2.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/chili/recipes.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 	<body class="body_methods">
@@ -57,40 +56,40 @@
 			
 		
 					<h4>Examples</h4>
-			<div class="description">
-														<h5 title="_tests/method_send_request.phpt">Send the request, parse it with ResponseCore, and display only the body.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+			<div class="description highlight">
+														<h5>Send the request, parse it with ResponseCore, and display only the body.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $response = $http-&gt;send_request(true);
 
-var_dump($response-&gt;body);</pre>
+var_dump($response-&gt;body);</code></pre>
 					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
 0123456789
 !@#$%^&amp;*()"</pre>
-														<h5 title="_tests/method_send_request2.phpt">Set the URL via set_request_url() instead of the constructor, send the request, parse it with ResponseCore, and display only the body.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore();
+														<h5>Set the URL via set_request_url() instead of the constructor, send the request, parse it with ResponseCore, and display only the body.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore();
 
 $http-&gt;set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $response = $http-&gt;send_request(true);
 
-var_dump($response-&gt;body);</pre>
+var_dump($response-&gt;body);</code></pre>
 					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
 0123456789
 !@#$%^&amp;*()"</pre>
-														<h5 title="_tests/method_send_request_head.phpt">Send a HEAD request instead of a GET request, and display the response's Content-Type and non-body (since this is a HEAD request).</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+														<h5>Send a HEAD request instead of a GET request, and display the response's Content-Type and non-body (since this is a HEAD request).</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_HEAD);
 $response = $http-&gt;send_request(true);
 
 var_dump($response-&gt;header['content-type']);
-var_dump($response-&gt;body);</pre>
+var_dump($response-&gt;body);</code></pre>
 					<br><pre>string(25) "text/plain; charset=utf-8"
 bool(false)</pre>
 							</div>
 		
 		<h4>Source</h4>
-						<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">RequestCore</a></em> | <a href="" class="showsource">Toggle source view</a> (15 lines)</p>
-		<div class="source hide">
-			<pre class="brush: php; auto-links: false; first-line: 589">public function send_request($parse = false)
+				<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (15 lines)</p>
+		<div class="source hide highlight">
+			<pre class="code ln-589"><code class="php">public function send_request($parse = false)
 {
     $curl_handle = $this-&gt;prep_request();
     $this-&gt;response = curl_exec($curl_handle);
@@ -105,42 +104,29 @@ bool(false)</pre>
 
     return $this-&gt;response;
 }
-</pre>
+</code></pre>
 		</div>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
 	$(function() {
+
+		// Syntax highlighting
+		ChiliBook.automatic = false;
+		ChiliBook.lineNumbers = true;
+		$('div.highlight pre').chili();
+		$('div.highlight pre ol li:even').addClass('odd');
+
+		// Toggle source view
 		$('a.showsource').click(function() {
-			// $('div.source').toggleClass('hide');
 			$('div.source').slideToggle('fast');
 			return false;
 		});
 	});
 	</script>
 
-	<!-- Disqus Comments -->
-	<!--
-	<div id="commentWrapper">
-		<br><br>
-		<div class="title">
-			<strong>User contributed notes</strong>
-		</div>
-		<div class="description">
-			<div id="disqus_thread"></div>
-			<script type="text/javascript">var disqus_developer = 1;</script>
-			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
-			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
-		</div>
-	</div>
-	-->
 </div>
 			</div>
 		</div>
-
-		<script type="text/javascript" charset="utf-8">
-		// SyntaxHighlighter.defaults['toolbar'] = false;
-		SyntaxHighlighter.all();
-		</script>
 	</body>
 </html>

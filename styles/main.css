@@ -14,6 +14,8 @@ a {
 	padding: 1px 2px !important;
 
 	-webkit-transition: background-color 0.15s;
+	-webkit-transition: color 0.15s;
+
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -59,7 +61,7 @@ h4 {
 
 h5 {
 	margin: 2.0em 0 0.5em 0;
-	font-size: 0.95em;
+	font-size: 0.98em;
 }
 
 #disqus_thread h3 {
@@ -143,7 +145,7 @@ ol li {
 }
 
 code, tt {
-	font: 1em/1.3em "Consolas", "Bitstream Vera Sans Mono", Monaco, monospace !important;
+	font: 1em/1.3em "Consolas", "Bitstream Vera Sans Mono", Monaco, monospace;
 	background-color: #eef;
 	color: #000080;
 	padding: 0 2px;
@@ -156,7 +158,7 @@ code, tt {
 
 pre {
 	margin-bottom: 1em;
-	font-family: "Consolas", "Bitstream Vera Sans Mono", monospace !important;
+	font-family: "Consolas", "Bitstream Vera Sans Mono", Monaco, monospace;
 }
 
 .methods dt {
@@ -217,7 +219,7 @@ pre {
 .attr-desc {}
 
 tt {
-	font-size: 1.15em;
+	font-size: 1em;
 }
 
 .attr-value {

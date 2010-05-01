@@ -6,16 +6,15 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>ResponseCore::isOK</title>
 
-		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="../../styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/reset.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/main.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="../../styles/syntax.css" type="text/css" media="screen" charset="utf-8">
 
-	    <script src="../../scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="../../scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="../../scripts/main.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../../scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/chili/jquery.chili-2.2.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="../../scripts/chili/recipes.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 	<body class="body_methods">
@@ -57,9 +56,9 @@
 			
 		
 					<h4>Examples</h4>
-			<div class="description">
-														<h5 title="_tests/method_responsecore_isok.phpt">Successful response code should make isOK() return true.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+			<div class="description highlight">
+														<h5>Successful response code should make isOK() return true.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 
 $response = new ResponseCore(
@@ -68,10 +67,10 @@ $response = new ResponseCore(
 	$http-&gt;get_response_code()
 );
 
-var_dump($response-&gt;isOK());</pre>
+var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(true)</pre>
-														<h5 title="_tests/method_responsecore_isok_false.phpt">Invalid response code (e.g. 999) should make isOK() fail.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+														<h5>Invalid response code (e.g. 999) should make isOK() fail.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 
 $response = new ResponseCore(
@@ -80,28 +79,28 @@ $response = new ResponseCore(
 	999
 );
 
-var_dump($response-&gt;isOK());</pre>
+var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(false)</pre>
-														<h5 title="_tests/method_send_request_isok.phpt">Standard request with a standard (successful) response code.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+														<h5>Standard request with a standard (successful) response code.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_PUT);
 $response = $http-&gt;send_request(true);
 
-var_dump($response-&gt;isOK());</pre>
+var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(true)</pre>
-														<h5 title="_tests/method_send_request_isok_200.phpt">Test response code 200 explicitly, excluding other valid response codes.</h5>
-					<pre class="brush: php; first-line: 1">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
+														<h5>Test response code 200 explicitly, excluding other valid response codes.</h5>
+					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_PUT);
 $response = $http-&gt;send_request(true);
 
-var_dump($response-&gt;isOK(200));</pre>
+var_dump($response-&gt;isOK(200));</code></pre>
 					<br><pre>bool(true)</pre>
 							</div>
 		
 		<h4>Source</h4>
-						<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">ResponseCore</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
-		<div class="source hide">
-			<pre class="brush: php; auto-links: false; first-line: 780">public function isOK($codes = array(200, 201, 204))
+				<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
+		<div class="source hide highlight">
+			<pre class="code ln-780"><code class="php">public function isOK($codes = array(200, 201, 204))
 {
     if (is_array($codes))
     {
@@ -112,42 +111,29 @@ var_dump($response-&gt;isOK(200));</pre>
         return ($this-&gt;status == $codes);
     }
 }
-</pre>
+</code></pre>
 		</div>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
 	$(function() {
+
+		// Syntax highlighting
+		ChiliBook.automatic = false;
+		ChiliBook.lineNumbers = true;
+		$('div.highlight pre').chili();
+		$('div.highlight pre ol li:even').addClass('odd');
+
+		// Toggle source view
 		$('a.showsource').click(function() {
-			// $('div.source').toggleClass('hide');
 			$('div.source').slideToggle('fast');
 			return false;
 		});
 	});
 	</script>
 
-	<!-- Disqus Comments -->
-	<!--
-	<div id="commentWrapper">
-		<br><br>
-		<div class="title">
-			<strong>User contributed notes</strong>
-		</div>
-		<div class="description">
-			<div id="disqus_thread"></div>
-			<script type="text/javascript">var disqus_developer = 1;</script>
-			<script type="text/javascript" src="http://disqus.com/forums/cloudfusion/embed.js"></script>
-			<noscript><a href="http://cloudfusion.disqus.com/?url=ref">View the discussion thread.</a></noscript>
-		</div>
-	</div>
-	-->
 </div>
 			</div>
 		</div>
-
-		<script type="text/javascript" charset="utf-8">
-		// SyntaxHighlighter.defaults['toolbar'] = false;
-		SyntaxHighlighter.all();
-		</script>
 	</body>
 </html>

@@ -6,16 +6,15 @@
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>RequestCore Reference</title>
 
-		<link rel="stylesheet" href="styles/reset.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="styles/shCore.css" type="text/css" media="screen" title="no title" charset="utf-8">
-		<link rel="stylesheet" href="styles/shThemeDefault.css" type="text/css" media="screen" title="no title" charset="utf-8">
+		<link rel="stylesheet" href="styles/reset.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="styles/main.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="styles/syntax.css" type="text/css" media="screen" charset="utf-8">
 
-	    <script src="scripts/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="scripts/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="scripts/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
 	    <script src="scripts/main.js" type="text/javascript" charset="utf-8"></script>
-		<script src="scripts/shCore.js" type="text/javascript" charset="utf-8"></script>
-		<script src="scripts/shBrushPhp.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="scripts/chili/jquery.chili-2.2.js" type="text/javascript" charset="utf-8"></script>
+	    <script src="scripts/chili/recipes.js" type="text/javascript" charset="utf-8"></script>
 
 	</head>
 	<body class="body_readme">
@@ -29,27 +28,38 @@
 
 		<div id="bodyContent">
 			<div id="content">
-				<div class="method readme"><h1>RequestCore</h1>
+				<div class="method readme">
 
-<p>RequestCore is a lightweight cURL-based HTTP request/response class that leverages MultiCurl for parallel requests.</p>
+	<div class="title">
+		<strong>Using the documentation</strong>
+	</div>
+	<ul>
+		<li>Press <code>up</code>, <code>down</code>, <code>left</code> and <code>right</code> to navigate the browse panel. Press <code>enter</code> to make a selection. Press <code>esc</code> to clear searches.</li>
+		<li>Searching will intelligently find results that start with (first), contain (second) and smart match (third) the words you're looking for.</li>
+		<li>Looking for a method that exists in multiple classes? Narrow your results by following your search term with the class you want to search.</li>
+		<li>Tested with Safari 4, Firefox 3, Opera 9.5, Chrome, IE8. IE 6 &amp; 7 are usable but <em>painfully</em> slow.</li>
+	</ul>
 
-<h3>PEAR HTTP_Request?</h3>
+	<br>
 
-<p>RequestCore was written as a replacement for <a href="http://pear.php.net/http_request/">PEAR HTTP_Request</a>. While PEAR HTTP_Request is full-featured and heavy, RequestCore features only the essentials and is very lightweight. It also leverages the batch request support in cURL's <code>curl_multi_exec()</code> to enable multi-threaded requests that fire in parallel.</p>
+	<div class="title">
+		<strong>On the shoulders of giants&hellip;</strong>
+	</div>
+	<p>This documentation wouldn't have been made possible without the following projects:</p>
+	<div class="description">
+		<ul>
+			<li><a href="http://github.com/skyzyx/vanity/">Vanity</a> &mdash; Uses PHP's Reflection API to generate source reference documentation. (MIT-licensed)</li>
+			<li><a href="http://github.com/voloko/sdoc/">SDoc</a> &mdash; The UI template with browse/search support. (MIT-licensed)</li>
+			<li><a href="http://code.google.com/p/spyc/">Spyc</a> &mdash; Pure PHP YAML parser. (MIT-licensed)</li>
+			<li><a href="http://code.google.com/p/jquery-chili-js/">Chili</a> &mdash; Syntax highlighter for source code. (MIT-licensed)</li>
+			<li><a href="http://jquery.com">jQuery</a> &mdash; A fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development. (MIT-licensed)</li>
+			<li><a href="http://github.com/skyzyx/phpt/">PHPT Parser</a> &mdash; Parses PHPT unit test files. (MIT-licensed)</li>
+			<li><a href="http://michelf.com/projects/php-markdown/">PHP Markdown</a> &mdash; Useful for converting large, free-form blocks of text into HTML. (BSD-licensed)</li>
+		</ul>
+	</div>
 
-<h3>Reference and Download</h3>
-
-<p>You can find the class reference at <a href="http://skyzyx.github.com/requestcore/">http://skyzyx.github.com/requestcore/</a>. You can get the code from <a href="http://github.com/skyzyx/requestcore">http://github.com/skyzyx/requestcore</a>.</p>
-
-<h3>License and Copyright</h3>
-
-<p>This code is Copyright (c) 2008-2010, Ryan Parman. However, I'm licensing this code for others to use under the <a href="http://www.opensource.org/licenses/bsd-license.php">Simplified BSD license</a>.</p>
-</div>			</div>
+</div>
+			</div>
 		</div>
-
-		<script type="text/javascript" charset="utf-8">
-		// SyntaxHighlighter.defaults['toolbar'] = false;
-		SyntaxHighlighter.all();
-		</script>
 	</body>
 </html>

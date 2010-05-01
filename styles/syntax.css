@@ -1,0 +1,37 @@
+html body div.highlight pre.code {
+	margin: 0;
+	font-family: "Consolas", "Bitstream Vera Sans Mono", Monaco, monospace;
+	padding: 0.5em 0;
+	border: none;
+	background-color: transparent;
+}
+
+html body div.highlight pre.code ol {
+	margin: 0;
+	padding: 0 0 0 3em;
+	/*background-color: #eee;*/
+}
+
+html body div.highlight pre.code ol li {
+	border-left: 3px solid #6CE26C;
+	background-color: #fff;
+	margin: 0;
+	padding: 0 0 0 1em;
+}
+
+html body div.highlight pre.code ol li.odd {
+	background-color: #f8f8f8;
+}
+
+html body div.highlight pre.code code {
+	font: inherit;
+	background-color: inherit;
+	color: inherit;
+	padding: 0;
+	white-space: auto;
+
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
