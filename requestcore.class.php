@@ -749,7 +749,7 @@ class ResponseCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	$header - _array_ (Required) Associative array of HTTP headers (typically returned by <RequestCore::getResponseHeader()>).
+	 * 	$header - _array_ (Required) Associative array of HTTP headers (typically returned by <RequestCore::get_response_header()>).
 	 * 	$body - _string_ (Required) XML-formatted response from AWS.
 	 * 	$status - _integer_ (Optional) HTTP response status code from the request.
 	 *
