@@ -57,7 +57,7 @@
 		
 					<h4>Examples</h4>
 			<div class="description highlight">
-														<h5>Successful response code should make isOK() return true.</h5>
+									<h5>Successful response code should make isOK() return true.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 
@@ -69,7 +69,7 @@ $response = new ResponseCore(
 
 var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(true)</pre>
-														<h5>Invalid response code (e.g. 999) should make isOK() fail.</h5>
+									<h5>Invalid response code (e.g. 999) should make isOK() fail.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 
@@ -81,14 +81,14 @@ $response = new ResponseCore(
 
 var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(false)</pre>
-														<h5>Standard request with a standard (successful) response code.</h5>
+									<h5>Standard request with a standard (successful) response code.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_PUT);
 $response = $http-&gt;send_request(true);
 
 var_dump($response-&gt;isOK());</code></pre>
 					<br><pre>bool(true)</pre>
-														<h5>Test response code 200 explicitly, excluding other valid response codes.</h5>
+									<h5>Test response code 200 explicitly, excluding other valid response codes.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_PUT);
 $response = $http-&gt;send_request(true);
@@ -98,7 +98,7 @@ var_dump($response-&gt;isOK(200));</code></pre>
 							</div>
 		
 		<h4>Source</h4>
-				<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
+		<p class="parent"><em>Method defined in <a href="../ResponseCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (11 lines)</p>
 		<div class="source hide highlight">
 			<pre class="code ln-780"><code class="php">public function isOK($codes = array(200, 201, 204))
 {

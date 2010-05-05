@@ -57,13 +57,13 @@
 		
 					<h4>Examples</h4>
 			<div class="description highlight">
-														<h5>Display the Content-Type header of the response.</h5>
+									<h5>Display the Content-Type header of the response.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 
 var_dump($http-&gt;get_response_header('content-type'));</code></pre>
 					<br><pre>string(25) "text/plain; charset=utf-8"</pre>
-														<h5>Display the URL that was requested.</h5>
+									<h5>Display the URL that was requested.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;send_request();
 $info = $http-&gt;get_response_header('_info');
@@ -73,7 +73,7 @@ var_dump($info['url']);</code></pre>
 							</div>
 		
 		<h4>Source</h4>
-				<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (8 lines)</p>
+		<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (8 lines)</p>
 		<div class="source hide highlight">
 			<pre class="code ln-679"><code class="php">public function get_response_header($header = null)
 {

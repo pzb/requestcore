@@ -57,7 +57,7 @@
 		
 					<h4>Examples</h4>
 			<div class="description highlight">
-														<h5>Send the request, parse it with ResponseCore, and display only the body.</h5>
+									<h5>Send the request, parse it with ResponseCore, and display only the body.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $response = $http-&gt;send_request(true);
 
@@ -65,7 +65,7 @@ var_dump($response-&gt;body);</code></pre>
 					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
 0123456789
 !@#$%^&amp;*()"</pre>
-														<h5>Set the URL via set_request_url() instead of the constructor, send the request, parse it with ResponseCore, and display only the body.</h5>
+									<h5>Set the URL via set_request_url() instead of the constructor, send the request, parse it with ResponseCore, and display only the body.</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore();
 
 $http-&gt;set_request_url('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
@@ -75,7 +75,7 @@ var_dump($response-&gt;body);</code></pre>
 					<br><pre>string(48) "abcdefghijklmnopqrstuvwxyz
 0123456789
 !@#$%^&amp;*()"</pre>
-														<h5>Send a HEAD request instead of a GET request, and display the response's Content-Type and non-body (since this is a HEAD request).</h5>
+									<h5>Send a HEAD request instead of a GET request, and display the response's Content-Type and non-body (since this is a HEAD request).</h5>
 					<pre class="code ln-"><code class="php">$http = new RequestCore('http://github.com/skyzyx/requestcore/raw/master/_tests/test_request.txt');
 $http-&gt;set_method($http::HTTP_HEAD);
 $response = $http-&gt;send_request(true);
@@ -87,7 +87,7 @@ bool(false)</pre>
 							</div>
 		
 		<h4>Source</h4>
-				<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (15 lines)</p>
+		<p class="parent"><em>Method defined in <a href="../RequestCore/index.html">requestcore.class.php</a></em> | <a href="" class="showsource">Toggle source view</a> (15 lines)</p>
 		<div class="source hide highlight">
 			<pre class="code ln-589"><code class="php">public function send_request($parse = false)
 {
