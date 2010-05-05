@@ -16,6 +16,7 @@
 	<script type="text/javascript" charset="utf-8">
 	function placeholder() {
 	    if ($.browser.safari) return;
+
 	    $('#search-label').click(function () {
 	        $('#search').focus();
 	        $('#search-label').hide();
@@ -24,6 +25,7 @@
 	    $('#search').focus(function () {
 	        $('#search-label').hide();
 	    });
+
 	    $('#search').blur(function () {
 	        this.value == '' && $('#search-label').show()
 	    });

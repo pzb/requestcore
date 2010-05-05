@@ -401,8 +401,9 @@ Searchdoc.Panel.prototype = $.extend({}, Searchdoc.Navigation, new function() {
 	}
 
 	this.open = function(src) {
-		this.frame.location.href = '../' + src;
-		if (this.frame.highlight) this.frame.highlight(src);
+		// this.frame.location.href = '../' + src;
+		// if (this.frame.highlight) this.frame.highlight(src);
+		top.window.location.hash = src;
 	}
 
 	this.select = function() {
