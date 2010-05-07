@@ -11,6 +11,7 @@
 	<script src="search_index.js" type="text/javascript" charset="utf-8"></script>
 	<script src="tree.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../scripts/jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../scripts/jquery.bbq.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../scripts/searchdoc.js" type="text/javascript" charset="utf-8"></script>
 
 	<script type="text/javascript" charset="utf-8">
@@ -46,6 +47,40 @@
 	            panel.search(s, true);
 	        }
 	    }
+
+		$(window).bind('hashchange', function(e) {
+			var method = $.bbq.getState('m'),
+				property = $.bbq.getState('p'),
+				constant = $.bbq.getState('c'),
+				classIndex = $.bbq.getState('i'),
+				$class, $item;
+
+			if (method) {
+				method = method.split('/');
+				$class = $('div.tree li.level_0 h1:contains(' + method[0] + ')').closest('li.level_0');
+				panel.tree.toggle($class);
+				$item = $class.nextUntil('div.tree li.level_0').filter(':contains(' + method[1] + ')')
+				panel.tree.select($item);
+			}
+			else if (property) {
+				property = property.split('/');
+				$class = $('div.tree li.level_0 h1:contains(' + property[0] + ')').closest('li.level_0');
+				panel.tree.toggle($class);
+				panel.tree.select($class.next().next());
+			}
+			else if (constant) {
+				constant = constant.split('/');
+				$class = $('div.tree li.level_0 h1:contains(' + constant[0] + ')').closest('li.level_0');
+				panel.tree.toggle($class);
+				panel.tree.select($class.next());
+			}
+			else if (classIndex) {
+				$class = $('div.tree li.level_0 h1:contains(' + classIndex + ')').closest('li.level_0');
+				panel.tree.toggle($class);
+				panel.tree.select($class);
+			}
+		});
+		$(window).trigger('hashchange');
 	});
 	</script>
 </head>

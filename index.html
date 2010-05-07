@@ -33,13 +33,17 @@
 				else {
 					$('#mainContent').attr('src', 'README.html');
 				}
+
+				// Write the parent hash to the panel's URL.
+				$('#panelContent').get(0).src += location.hash;
+
 			});
 			$(window).trigger('hashchange');
 		});
 		</script>
 	</head>
 	<frameset cols="300,*" frameborder="1" border="1" bordercolor="#666666" framespacing="1">
-		<frame src="panel/index.html" title="Search" name="panel" />
+		<frame src="panel/index.html" title="Search" name="panel" id="panelContent" />
 		<frame src="README.html" name="docwin" id="mainContent" />
 	</frameset>
 </html>
