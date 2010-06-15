@@ -9,5 +9,5 @@ curl_handle
 	var_dump($http->curl_handle);
 ?>
 
---EXPECT--
-resource(5) of type (Unknown)
+--EXPECTF--
+resource(%d) of type (Unknown)

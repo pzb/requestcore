@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2010.03.21
+ * 	2010.06.15
  *
  * Copyright:
  * 	2006-2010 Ryan Parman, Foleeo Inc., and contributors.
@@ -133,7 +133,7 @@ class RequestCore
 	 * Property: useragent
 	 * 	Default useragent string to use.
 	 */
-	var $useragent = 'RequestCore/1.1';
+	var $useragent = 'RequestCore/1.1.4';
 
 	/**
 	 * Constant: HTTP_GET
@@ -188,7 +188,7 @@ class RequestCore
 	{
 		// Set some default values.
 		$this->request_url = $url;
-		$this->method = $this::HTTP_GET;
+		$this->method = self::HTTP_GET;
 		$this->request_headers = array();
 		$this->request_body = '';
 
@@ -487,18 +487,18 @@ class RequestCore
 
 		switch ($this->method)
 		{
-			case $this::HTTP_PUT:
+			case self::HTTP_PUT:
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
-			case $this::HTTP_POST:
+			case self::HTTP_POST:
 				curl_setopt($curl_handle, CURLOPT_POST, true);
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
-			case $this::HTTP_HEAD:
-				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this::HTTP_HEAD);
+			case self::HTTP_HEAD:
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, self::HTTP_HEAD);
 				curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
 				break;
 
