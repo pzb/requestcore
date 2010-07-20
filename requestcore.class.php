@@ -4,7 +4,7 @@
  * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2010.06.15
+ * 	2010.07.20
  *
  * Copyright:
  * 	2006-2010 Ryan Parman, Foleeo Inc., and contributors.
@@ -133,7 +133,23 @@ class RequestCore
 	 * Property: useragent
 	 * 	Default useragent string to use.
 	 */
-	var $useragent = 'RequestCore/1.1.4';
+	var $useragent = 'RequestCore/1.2';
+
+	/**
+	 * Property: read_file
+	 * 	File to read from while streaming up.
+	 */
+	var $read_file = null;
+
+	/**
+	 * Property: write_file
+	 * 	File to write to while streaming down.
+	 */
+	var $write_file = null;
+
+
+	/*%******************************************************************************************%*/
+	// CONSTANTS
 
 	/**
 	 * Constant: HTTP_GET
@@ -375,6 +391,44 @@ class RequestCore
 	}
 
 	/**
+	 * Method: set_read_file()
+	 * 	Sets the file to read from while streaming up.
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	$location - _string_ (Required) The file system location to read from.
+	 *
+	 * Returns:
+	 * 	`$this`
+	 */
+	public function set_read_file($location)
+	{
+		$this->read_file = $location;
+		return $this;
+	}
+
+	/**
+	 * Method: set_write_file()
+	 * 	Sets the file to write to while streaming down.
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	$location - _string_ (Required) The file system location to read from.
+	 *
+	 * Returns:
+	 * 	`$this`
+	 */
+	public function set_write_file($location)
+	{
+		$this->write_file = $location;
+		return $this;
+	}
+
+	/**
 	 * Method: set_proxy()
 	 * 	Set the proxy to use for making requests.
 	 *
@@ -413,8 +467,7 @@ class RequestCore
 	 */
 	public function prep_request()
 	{
-		$this->add_header('Expect', '100-continue');
-		$this->add_header('Connection', 'close');
+		// $this->add_header('Connection', 'close');
 
 		$curl_handle = curl_init();
 
@@ -434,15 +487,7 @@ class RequestCore
 		curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
 		curl_setopt($curl_handle, CURLOPT_USERAGENT, $this->useragent);
-
-		// Merge in the CURLOPTs
-		if (isset($this->curlopts) && sizeof($this->curlopts) > 0)
-		{
-			foreach ($this->curlopts as $k => $v)
-			{
-				curl_setopt($curl_handle, $k, $v);
-			}
-		}
+		curl_setopt($curl_handle, CURLOPT_LOW_SPEED_LIMIT, 1);
 
 		// Enable a proxy connection if requested.
 		if ($this->proxy)
@@ -490,6 +535,14 @@ class RequestCore
 			case self::HTTP_PUT:
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				if ($this->read_file)
+				{
+					// @todo: Close this connection!
+					$read_file_handle = fopen($this->read_file, 'r');
+					curl_setopt($curl_handle, CURLOPT_INFILE, $read_file_handle);
+					curl_setopt($curl_handle, CURLOPT_INFILESIZE, filesize($this->read_file));
+					curl_setopt($curl_handle, CURLOPT_UPLOAD, true);
+				}
 				break;
 
 			case self::HTTP_POST:
@@ -502,10 +555,26 @@ class RequestCore
 				curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
 				break;
 
-			default:
+			default: // Assumed GET
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this->method);
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				if ($this->write_file)
+				{
+					// @todo: Close this connection!
+					$write_file_handle = fopen($this->write_file, 'w+');
+					curl_setopt($curl_handle, CURLOPT_FILE, $write_file_handle);
+					curl_setopt($curl_handle, CURLOPT_HEADER, false);
+				}
 				break;
+		}
+
+		// Merge in the CURLOPTs
+		if (isset($this->curlopts) && sizeof($this->curlopts) > 0)
+		{
+			foreach ($this->curlopts as $k => $v)
+			{
+				curl_setopt($curl_handle, $k, $v);
+			}
 		}
 
 		return $curl_handle;
@@ -588,6 +657,8 @@ class RequestCore
 	 */
 	public function send_request($parse = false)
 	{
+		set_time_limit(0);
+
 		$curl_handle = $this->prep_request();
 		$this->response = curl_exec($curl_handle);
 		$parsed_response = $this->process_response($curl_handle, $this->response);
@@ -617,6 +688,8 @@ class RequestCore
 	 */
 	public function send_multi_request($handles)
 	{
+		set_time_limit(0);
+
 		// Initialize MultiCURL
 		$multi_handle = curl_multi_init();
 
