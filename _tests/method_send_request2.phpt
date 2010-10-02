@@ -10,6 +10,8 @@ Set the URL via set_request_url() instead of the constructor, send the request, 
 	$response = $http->send_request(true);
 
 	var_dump($response->body);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

@@ -9,6 +9,8 @@ Send a request and display the URL we requested.
 	$http->send_request();
 
 	var_dump($http->response_info['url']);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

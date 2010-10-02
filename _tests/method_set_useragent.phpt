@@ -8,6 +8,8 @@ Set a useragent string to use for HTTP requests.
 	$http->set_useragent('SampleUserAgentString');
 
 	var_dump($http->useragent);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

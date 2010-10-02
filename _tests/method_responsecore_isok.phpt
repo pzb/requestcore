@@ -14,6 +14,8 @@ Successful response code should make isOK() return true.
 	);
 
 	var_dump($response->isOK());
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

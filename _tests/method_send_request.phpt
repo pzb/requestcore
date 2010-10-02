@@ -8,6 +8,8 @@ Send the request, parse it with ResponseCore, and display only the body.
 	$response = $http->send_request(true);
 
 	var_dump($response->body);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

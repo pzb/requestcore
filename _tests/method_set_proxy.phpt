@@ -9,6 +9,8 @@ Pass in a proxy DSN string, and process it with prep_request() (without firing t
 	$http->prep_request();
 
 	var_dump($http->proxy);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

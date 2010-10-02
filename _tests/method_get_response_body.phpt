@@ -8,6 +8,8 @@ Display the response body of the request.
 	$http->send_request();
 
 	var_dump($http->get_response_body());
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

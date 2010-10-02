@@ -14,6 +14,8 @@ Invalid response code (e.g. 999) should make isOK() fail.
 	);
 
 	var_dump($response->isOK());
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

@@ -10,6 +10,8 @@ Send a HEAD request instead of a GET request, and display the response's Content
 
 	var_dump($response->header['content-type']);
 	var_dump($response->body);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

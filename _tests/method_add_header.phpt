@@ -9,6 +9,8 @@ Add a custom header to the request (without firing it).
 	$http->add_header('x-requestcore-header', 'value');
 
 	var_dump($http->request_headers);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

@@ -9,6 +9,8 @@ Display the URL that was requested.
 	$info = $http->get_response_header('_info');
 
 	var_dump($info['url']);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

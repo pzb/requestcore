@@ -1,5 +1,5 @@
 --TEST--
-Collect cURL handles for two requests, fire them, then display the response bodies.
+Collect cURL handles for two requests, fire them, and then display the response bodies.
 
 --FILE--
 <?php
@@ -17,6 +17,8 @@ Collect cURL handles for two requests, fire them, then display the response bodi
 	);
 
 	var_dump($bodies);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

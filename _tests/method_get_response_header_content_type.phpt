@@ -8,6 +8,8 @@ Display the Content-Type header of the response.
 	$http->send_request();
 
 	var_dump($http->get_response_header('content-type'));
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

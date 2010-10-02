@@ -1,5 +1,5 @@
 --TEST--
-Add a custom header to the request, then remove it (without firing it).
+Add a custom header to the request, and then remove it (without firing it).
 
 --FILE--
 <?php
@@ -11,6 +11,8 @@ Add a custom header to the request, then remove it (without firing it).
 	$http->remove_header('x-requestcore-header');
 
 	var_dump($http->request_headers);
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

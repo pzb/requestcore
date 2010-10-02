@@ -9,6 +9,8 @@ Test response code 200 explicitly, excluding other valid response codes.
 	$response = $http->send_request(true);
 
 	var_dump($response->isOK(200));
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--

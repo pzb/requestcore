@@ -9,6 +9,8 @@ Standard request with a standard (successful) response code.
 	$response = $http->send_request(true);
 
 	var_dump($response->isOK());
+
+	/*#block:["require_once"]*/
 ?>
 
 --EXPECT--
