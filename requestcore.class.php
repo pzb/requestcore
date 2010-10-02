@@ -1,10 +1,10 @@
 <?php
 /**
  * File: RequestCore
- * 	Handles all linear and parallel HTTP requests using cURL and manages the responses.
+ * 	Handles all HTTP requests using cURL and manages the responses.
  *
  * Version:
- * 	2010.03.21
+ * 	2010.09.27
  *
  * Copyright:
  * 	2006-2010 Ryan Parman, Foleeo Inc., and contributors.
@@ -133,7 +133,23 @@ class RequestCore
 	 * Property: useragent
 	 * 	Default useragent string to use.
 	 */
-	var $useragent = 'RequestCore/1.1';
+	var $useragent = 'RequestCore/1.2';
+
+	/**
+	 * Property: read_file
+	 * 	File to read from while streaming up.
+	 */
+	var $read_file = null;
+
+	/**
+	 * Property: write_file
+	 * 	File to write to while streaming down.
+	 */
+	var $write_file = null;
+
+
+	/*%******************************************************************************************%*/
+	// CONSTANTS
 
 	/**
 	 * Constant: HTTP_GET
@@ -188,7 +204,7 @@ class RequestCore
 	{
 		// Set some default values.
 		$this->request_url = $url;
-		$this->method = $this::HTTP_GET;
+		$this->method = self::HTTP_GET;
 		$this->request_headers = array();
 		$this->request_body = '';
 
@@ -375,6 +391,44 @@ class RequestCore
 	}
 
 	/**
+	 * Method: set_read_file()
+	 * 	Sets the file to read from while streaming up.
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	$location - _string_ (Required) The file system location to read from.
+	 *
+	 * Returns:
+	 * 	`$this`
+	 */
+	public function set_read_file($location)
+	{
+		$this->read_file = $location;
+		return $this;
+	}
+
+	/**
+	 * Method: set_write_file()
+	 * 	Sets the file to write to while streaming down.
+	 *
+	 * Access:
+	 * 	public
+	 *
+	 * Parameters:
+	 * 	$location - _string_ (Required) The file system location to read from.
+	 *
+	 * Returns:
+	 * 	`$this`
+	 */
+	public function set_write_file($location)
+	{
+		$this->write_file = $location;
+		return $this;
+	}
+
+	/**
 	 * Method: set_proxy()
 	 * 	Set the proxy to use for making requests.
 	 *
@@ -413,9 +467,6 @@ class RequestCore
 	 */
 	public function prep_request()
 	{
-		$this->add_header('Expect', '100-continue');
-		$this->add_header('Connection', 'close');
-
 		$curl_handle = curl_init();
 
 		// Set default options.
@@ -434,15 +485,7 @@ class RequestCore
 		curl_setopt($curl_handle, CURLOPT_NOSIGNAL, true);
 		curl_setopt($curl_handle, CURLOPT_REFERER, $this->request_url);
 		curl_setopt($curl_handle, CURLOPT_USERAGENT, $this->useragent);
-
-		// Merge in the CURLOPTs
-		if (isset($this->curlopts) && sizeof($this->curlopts) > 0)
-		{
-			foreach ($this->curlopts as $k => $v)
-			{
-				curl_setopt($curl_handle, $k, $v);
-			}
-		}
+		curl_setopt($curl_handle, CURLOPT_LOW_SPEED_LIMIT, 1);
 
 		// Enable a proxy connection if requested.
 		if ($this->proxy)
@@ -487,25 +530,49 @@ class RequestCore
 
 		switch ($this->method)
 		{
-			case $this::HTTP_PUT:
+			case self::HTTP_PUT:
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'PUT');
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				if ($this->read_file)
+				{
+					// @todo: Close this connection!
+					$read_file_handle = fopen($this->read_file, 'r');
+					curl_setopt($curl_handle, CURLOPT_INFILE, $read_file_handle);
+					curl_setopt($curl_handle, CURLOPT_INFILESIZE, filesize($this->read_file));
+					curl_setopt($curl_handle, CURLOPT_UPLOAD, true);
+				}
 				break;
 
-			case $this::HTTP_POST:
+			case self::HTTP_POST:
 				curl_setopt($curl_handle, CURLOPT_POST, true);
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
 				break;
 
-			case $this::HTTP_HEAD:
-				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this::HTTP_HEAD);
+			case self::HTTP_HEAD:
+				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, self::HTTP_HEAD);
 				curl_setopt($curl_handle, CURLOPT_NOBODY, 1);
 				break;
 
-			default:
+			default: // Assumed GET
 				curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, $this->method);
 				curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $this->request_body);
+				if ($this->write_file)
+				{
+					// @todo: Close this connection!
+					$write_file_handle = fopen($this->write_file, 'w+');
+					curl_setopt($curl_handle, CURLOPT_FILE, $write_file_handle);
+					curl_setopt($curl_handle, CURLOPT_HEADER, false);
+				}
 				break;
+		}
+
+		// Merge in the CURLOPTs
+		if (isset($this->curlopts) && sizeof($this->curlopts) > 0)
+		{
+			foreach ($this->curlopts as $k => $v)
+			{
+				curl_setopt($curl_handle, $k, $v);
+			}
 		}
 
 		return $curl_handle;
@@ -588,6 +655,8 @@ class RequestCore
 	 */
 	public function send_request($parse = false)
 	{
+		set_time_limit(0);
+
 		$curl_handle = $this->prep_request();
 		$this->response = curl_exec($curl_handle);
 		$parsed_response = $this->process_response($curl_handle, $this->response);
@@ -604,58 +673,105 @@ class RequestCore
 
 	/**
 	 * Method: send_multi_request()
-	 * 	Sends the request using curl_multi_exec(), enabling parallel requests.
+	 * 	Sends the request using curl_multi_exec(), enabling parallel requests. Uses the "rolling" method.
 	 *
 	 * Access:
 	 * 	public
 	 *
 	 * Parameters:
 	 * 	$handles - _array_ (Required) An indexed array of cURL handles to process simultaneously.
+	 * 	$opt - _array_ (Optional) Associative array of parameters which can have the following keys:
+	 *
+	 * Keys for the $opt parameter:
+	 * 	callback - _string_|_array_ (Optional) The string name of a function to pass the response data to. If this is a method, pass an array where the [0] index is the class and the [1] index is the method name.
+	 * 	limit - _integer_ (Optional) The number of simultaneous requests to make. This can be useful for scaling around slow server responses. Defaults to trusting cURLs judgement as to how many to use.
 	 *
 	 * Returns:
 	 * 	_array_ Post-processed cURL responses.
 	 */
-	public function send_multi_request($handles)
+	public function send_multi_request($handles, $opt = null)
 	{
-		// Initialize MultiCURL
-		$multi_handle = curl_multi_init();
+		// Skip everything if there are no handles to process.
+		if (count($handles) === 0) return array();
 
-		// Loop through each of the CURL handles and add them to the MultiCURL request.
-		foreach ($handles as $handle)
+		if (!$opt) $opt = array();
+
+		// Initialize any missing options
+		$limit = isset($opt['limit']) ? $opt['limit'] : -1;
+
+		// Initialize
+		$handle_list = $handles;
+		$http = new $this->request_class();
+		$multi_handle = curl_multi_init();
+		$handles_post = array();
+		$added = count($handles);
+		$last_handle = null;
+		$count = 0;
+		$i = 0;
+
+		// Loop through the cURL handles and add as many as it set by the limit parameter.
+		while ($i < $added)
 		{
-			curl_multi_add_handle($multi_handle, $handle);
+			if ($limit > 0 && $i >= $limit) break;
+			curl_multi_add_handle($multi_handle, array_shift($handles));
+			$i++;
 		}
 
-		$count = 0;
-
-		// Execute
 		do
 		{
-			$status = curl_multi_exec($multi_handle, $active);
-		}
-		while ($status == CURLM_CALL_MULTI_PERFORM || $active);
+			$active = false;
 
-		// Define this.
-		$handles_post = array();
-
-		// Retrieve each handle response
-		foreach ($handles as $handle)
-		{
-			if (curl_errno($handle) == CURLE_OK)
+			// Start executing and wait for a response.
+			while (($status = curl_multi_exec($multi_handle, $active)) === CURLM_CALL_MULTI_PERFORM)
 			{
-				$http = new $this->request_class(null);
-				$handles_post[] = $http->process_response($handle, curl_multi_getcontent($handle));
-			}
-			else
-			{
-				throw new RequestCore_Exception(curl_error($handle));
+				if ($status !== CURLM_OK && $limit > 0) break;
 			}
 
-			// Explicitly close each cURL handle.
-			curl_multi_remove_handle($multi_handle, $handle);
-			curl_close($handle);
-		}
+			// Figure out which requests finished.
+			$qlength = 0;
+			$to_process = array();
 
+			while ($done = curl_multi_info_read($multi_handle, $qlength))
+			{
+				// Since curl_errno() isn't reliable for handles that were in multirequests, we check the 'result' of the info read, which contains the curl error number, (listed here http://curl.haxx.se/libcurl/c/libcurl-errors.html )
+				if ($done['result'] > 0)
+				{
+					throw new RequestCore_Exception('cURL resource: ' . (string) $done['handle'] . '; cURL error: ' . curl_error($done['handle']) . ' (' . $done['result'] . ')');
+				}
+
+				// Because curl_multi_info_read() might return more than one message about a request, we check to see if this request is already in our array of completed requests
+				elseif (!isset($to_process[(int) $done['handle']]))
+				{
+					$to_process[(int) $done['handle']] = $done;
+				}
+			}
+
+			// Actually deal with the request
+			foreach ($to_process as $pkey => $done)
+			{
+				if ((int) $done['handle'] != $last_handle)
+				{
+					$last_handle = (int) $done['handle'];
+					$response = $http->process_response($done['handle'], curl_multi_getcontent($done['handle']));
+					$key = array_search($done['handle'], $handle_list, true);
+
+					$handles_post[$key] = $response;
+
+					if (count($handles) > 0)
+					{
+						curl_multi_add_handle($multi_handle, array_shift($handles));
+					}
+
+					curl_multi_remove_handle($multi_handle, $done['handle']);
+					curl_close($done['handle']);
+				}
+			}
+		}
+		while ($active);
+
+		curl_multi_close($multi_handle);
+
+		ksort($handles_post, SORT_NUMERIC);
 		return $handles_post;
 	}
 
@@ -761,6 +877,7 @@ class ResponseCore
 		$this->header = $header;
 		$this->body = $body;
 		$this->status = $status;
+
 		return $this;
 	}
 
@@ -772,7 +889,7 @@ class ResponseCore
 	 * 	public
 	 *
 	 * Parameters:
-	 * 	$codes - _integer|array_ (Optional) The status code(s) to expect. Pass an _integer_ for a single acceptable value, or an _array_ of integers for multiple acceptable values. Defaults to _array_.
+	 * 	$codes - _integer_|_array_ (Optional) The status code(s) to expect. Pass an _integer_ for a single acceptable value, or an _array_ of integers for multiple acceptable values. Defaults to _array_.
 	 *
 	 * Returns:
 	 * 	_boolean_ Whether we received the expected status code or not.
@@ -783,9 +900,8 @@ class ResponseCore
 		{
 			return in_array($this->status, $codes);
 		}
-		else
-		{
-			return ($this->status == $codes);
-		}
+
+		return $this->status === $codes;
 	}
 }
+
