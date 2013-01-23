@@ -1,0 +1,24 @@
+{
+    "name": "pzb/requestcore",
+    "type": "library",
+    "description": "Lightweight cURL-based HTTP class.",
+    "keywords": ["requestcore"],
+    "homepage": "https://github.com/pzb/requestcore",
+    "authors": [
+        {
+            "name": "Peter Bowen",
+            "homepage": "http://www.peterbowen.org/"
+        },
+        {
+            "name": "Community contributors",
+            "homepage": "https://github.com/pzb/requestcore/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "files": ["requestcore.class.php"]
+    }
+}
